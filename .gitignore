@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+nasapi-cpp
 
 # Clion
 .idea
