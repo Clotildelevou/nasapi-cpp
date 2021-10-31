@@ -8,7 +8,7 @@ void Logger::setStatus(enum LoggerStatus newStatus) {
     this->status = newStatus;
 }
 
-void Logger::printLog(std::string &log) {
+void Logger::printLog(const std::string &log) {
     std::string color;
     std::string header = "[INFO]";
     std::string reset = "\033[0m";

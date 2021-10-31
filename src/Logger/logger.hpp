@@ -25,7 +25,7 @@ public:
 
     void setStatus(enum LoggerStatus newStatus);
 
-    void printLog(std::string &log);
+    void printLog(const std::string &log);
 };
 
 
