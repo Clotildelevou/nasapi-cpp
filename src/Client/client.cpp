@@ -6,13 +6,21 @@ int Client::connect() {
     {
         std::stringstream ss;
         ss << "Connection to " << inet_ntoa(sin_.sin_addr) << " on the " << htons(sin_.sin_port) << " port.";
-        this->logger.printLog(ss.str());
+        onAction(ss.str());
         return 0;
     }
     else {
-        this->logger.setStatus(ERROR);
-        this->logger.printLog("Connection failed");
-        this->logger.setStatus(OK);
+        onError("Connection failed");
         return -1;
     }
+}
+
+void Client::onError(const std::string &log) {
+    this->logger.setStatus(ERROR);
+    this->logger.printLog(log);
+    this->logger.setStatus(OK);
+}
+
+void Client::onAction(const std::string &log) {
+    this->logger.printLog(log);
 }

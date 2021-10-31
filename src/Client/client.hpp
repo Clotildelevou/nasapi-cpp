@@ -9,16 +9,21 @@
 #include <cstdlib>
 #include <string>
 #include <sstream>
+#include <netdb.h>
+#include <cstring>
 
 #include "logger.hpp"
 
 class Client {
 private:
     int port_;
-    std::string ip_;
+    struct hostent *host;
     sockaddr_in sin_;
     int socket_;
     Logger logger;
+
+    void onError(const std::string &log);
+    void onAction(const std::string &log);
 
 
 public:
@@ -26,20 +31,25 @@ public:
     {
         this->port_ = port;
 
-        this->ip_ = ip;
-
         this->logger = Logger();
 
-        this->sin_.sin_addr.s_addr = inet_addr(this->ip_.c_str());
+        this->host = gethostbyname("api.nasa.gov");
+        if ( (host == nullptr) || (host->h_addr == nullptr) ) {
+            onError("Error retrieving DNS information.");
+            exit(1);
+        }
+
+        memcpy(&sin_.sin_addr, this->host->h_addr, this->host->h_length);
         this->sin_.sin_port = htons(this->port_);
         this->sin_.sin_family = AF_INET;
 
         this->socket_ = socket(AF_INET, SOCK_STREAM, 0);
         if (this->socket_ == -1)
         {
-            perror("Error in socket creation :");
+            onError("Error in socket creation.");
             exit(-1);
         }
+        onAction("Client successfully created.");
     }
 
     int connect();
