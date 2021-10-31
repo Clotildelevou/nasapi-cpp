@@ -24,3 +24,16 @@ void Client::onError(const std::string &log) {
 void Client::onAction(const std::string &log) {
     this->logger.printLog(log);
 }
+
+int Client::disconnect() {
+    if (close(this->socket_) == -1)
+    {
+        onError("Couldn't close connexion.");
+        return -1;
+    }
+    else
+    {
+        onAction("Client disconnected.");
+        return 0;
+    }
+}

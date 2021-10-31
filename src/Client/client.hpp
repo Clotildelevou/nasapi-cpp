@@ -53,5 +53,6 @@ public:
     }
 
     int connect();
+    int disconnect();
 };
 
