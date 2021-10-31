@@ -26,11 +26,13 @@ set(LDFLAGS_TEST -fsanitize=address -lamqpcpp)
 set(LIBS
         client
         logger
+        query
         )
 
 include_directories(
         "src/Client"
         "src/Logger"
+        "src/Query"
 )
 
 # Client
@@ -42,6 +44,11 @@ target_compile_options(client PRIVATE ${CXX_FLAGS})
 file(GLOB_RECURSE LOGGER_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "src/Logger/*.cpp")
 add_library(logger STATIC ${LOGGER_SOURCES})
 target_compile_options(logger PRIVATE ${CXX_FLAGS})
+
+# Query
+file(GLOB_RECURSE QUERY_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "src/Query/*.cpp")
+add_library(query STATIC ${QUERY_SOURCES})
+target_compile_options(query PRIVATE ${CXX_FLAGS})
 
 
 # ==========================================
