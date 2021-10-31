@@ -27,9 +27,9 @@ private:
 
 
 public:
-    Client(std::string &ip, int port)
+    Client()
     {
-        this->port_ = port;
+        this->port_ = 80;
 
         this->logger = Logger();
 
@@ -49,10 +49,9 @@ public:
             onError("Error in socket creation.");
             exit(-1);
         }
-        onAction("Client successfully created.");
+        onAction("Client created.");
     }
 
     int connect();
 };
-
 
