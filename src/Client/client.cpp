@@ -44,5 +44,8 @@ int Client::send(Query &query) {
         onError("Error sending request.");
         return -1;
     }
+    onAction("Request sent.");
     return 0;
 }
+
+
