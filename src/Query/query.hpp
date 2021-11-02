@@ -2,6 +2,8 @@
 
 #include <string>
 #include <sstream>
+#include <ctime>
+#include <iomanip>
 
 enum QueryType
 {
@@ -27,12 +29,27 @@ class Query {
 private:
     std::string apiKey;
     enum QueryType type;
+    std::string today;
 
-    std::string buildApod(bool thumb, std::string date = "today", bool conceptTags = false, bool hd = true);
-    std::string buildApod(std::string startDate, std::string endDate, bool thumb, bool conceptTags = false, bool hd = true);
-    std::string buildApod(int count, bool thumb, bool conceptTags = false, bool hd = true);
+    std::string Apod(bool thumb, std::string date = "today");
+
+    std::string Apod(std::string &startDate, std::string &endDate, bool thumb);
+
+    std::string Apod(int count, bool thumb);
 
 public:
+    Query(std::string &apiKey, enum QueryType type):
+            apiKey(apiKey),
+            type(type)
+    {
+        auto t = std::time(nullptr);
+        auto tm = *std::localtime(&t);
+
+        std::ostringstream oss;
+        oss << std::put_time(&tm, "%d-%m-%Y");
+        this->today = oss.str();
+
+    }
 
 };
 
