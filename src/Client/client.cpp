@@ -25,6 +25,7 @@ void Client::onAction(const std::string &log) {
     this->logger.printLog(log);
 }
 
+
 int Client::disconnect() {
     if (close(this->socket_) == -1)
     {
@@ -36,4 +37,12 @@ int Client::disconnect() {
         onAction("Client disconnected.");
         return 0;
     }
+}
+
+int Client::send(Query &query) {
+    if (::send(this->socket_, &query.getQuery(),  query.getQuery().length(), 0) ==  -1) {
+        onError("Error sending request.");
+        return -1;
+    }
+    return 0;
 }

@@ -13,6 +13,7 @@
 #include <cstring>
 
 #include "logger.hpp"
+#include "query.hpp"
 
 class Client {
 private:
@@ -53,6 +54,7 @@ public:
     }
 
     int connect();
+    int send(Query &query);
     int disconnect();
 };
 
