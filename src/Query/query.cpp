@@ -1,5 +1,10 @@
 #include "query.hpp"
 
+
+void Query::Apod() {
+    Apod(true);
+}
+
 void Query::Apod(bool thumb, const std::string& date) {
     std::stringstream ss;
     ss << "GET https://api.nasa.gov/planetary/apod?api_key=" << this->apiKey;
