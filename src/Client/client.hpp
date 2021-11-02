@@ -1,5 +1,8 @@
 #pragma once
 
+#include <filesystem>
+#include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -12,49 +15,49 @@
 #include <netdb.h>
 #include <cstring>
 
+#include "json.h"
+
 #include "logger.hpp"
 #include "query.hpp"
 
+const int BUFF_SIZE = 1024;
+
+using boost::asio::ip::tcp;
+namespace ssl = boost::asio::ssl;
+typedef ssl::stream<tcp::socket> ssl_socket;
+
 class Client {
 private:
-    int port_;
-    struct hostent *host;
-    sockaddr_in sin_;
-    int socket_;
+    std::shared_ptr<ssl::context> context_;
+    std::shared_ptr<boost::asio::io_service> io_service_;
+    std::shared_ptr<ssl_socket> socket_;
+    std::shared_ptr<tcp::resolver> resolver_;
     Logger logger;
+    const char *jsonRep;
 
     void onError(const std::string &log);
     void onAction(const std::string &log);
+    const char *genFilename();
+    int buildJson(const char *filename);
 
 
 public:
     Client()
     {
-        this->port_ = 80;
+        // Create a context that uses the default paths for
+        // finding CA certificates.
+        this->context_ = std::make_shared<ssl::context>(ssl::context::sslv23);
+        this->context_->set_default_verify_paths();
 
-        this->logger = Logger();
-
-        this->host = gethostbyname("api.nasa.gov");
-        if ( (host == nullptr) || (host->h_addr == nullptr) ) {
-            onError("Error retrieving DNS information.");
-            exit(1);
-        }
-
-        memcpy(&sin_.sin_addr, this->host->h_addr, this->host->h_length);
-        this->sin_.sin_port = htons(this->port_);
-        this->sin_.sin_family = AF_INET;
-
-        this->socket_ = socket(AF_INET, SOCK_STREAM, 0);
-        if (this->socket_ == -1)
-        {
-            onError("Error in socket creation.");
-            exit(-1);
-        }
+        // Open a socket and connect it to the remote host.
+        this->socket_ = std::make_shared<ssl_socket>(this->io_service_, *this->context_);
+        tcp::resolver resolver(*this->io_service_);
         onAction("Client created.");
     }
 
     int connect();
     int send(Query &query);
+    int receive();
     int disconnect();
 };
 
