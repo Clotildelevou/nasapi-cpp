@@ -30,12 +30,13 @@ private:
     std::string apiKey;
     enum QueryType type;
     std::string today;
+    std::string query;
 
-    std::string Apod(bool thumb, std::string date = "today");
+    void Apod(bool thumb, std::string date = "today");
 
-    std::string Apod(std::string &startDate, std::string &endDate, bool thumb);
+    void Apod(std::string &startDate, std::string &endDate, bool thumb);
 
-    std::string Apod(int count, bool thumb);
+    void Apod(int count, bool thumb);
 
 public:
     Query(std::string &apiKey, enum QueryType type):

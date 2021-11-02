@@ -1,6 +1,6 @@
 #include "query.hpp"
 
-std::string Query::Apod(bool thumb, std::string date) {
+void Query::Apod(bool thumb, std::string date) {
     std::stringstream ss;
     ss << "https://api.nasa.gov/planetary/apod?api_key=" << this->apiKey;
 
@@ -11,10 +11,10 @@ std::string Query::Apod(bool thumb, std::string date) {
 
     if (thumb)
         ss << "&thumb=true";
-    return ss.str();
+    this->query = ss.str();
 }
 
-std::string Query::Apod(std::string &startDate, std::string &endDate, bool thumb) {
+void Query::Apod(std::string &startDate, std::string &endDate, bool thumb) {
     std::stringstream ss;
 
     ss << "https://api.nasa.gov/planetary/apod?api_key=" << this->apiKey
@@ -23,13 +23,13 @@ std::string Query::Apod(std::string &startDate, std::string &endDate, bool thumb
 
     if (thumb)
         ss << "&thumb=true";
-    return ss.str();
+    this->query = ss.str();
 }
 
-std::string Query::Apod(int count, bool thumb) {
+void Query::Apod(int count, bool thumb) {
     std::stringstream ss;
 
     ss << "https://api.nasa.gov/planetary/apod?api_key=" << this->apiKey
     << "&count=" << count;
-    return ss.str();
+    this->query = ss.str();
 }
