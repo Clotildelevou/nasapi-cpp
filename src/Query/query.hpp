@@ -29,28 +29,21 @@ class Query {
 private:
     std::string apiKey;
     enum QueryType type;
-    std::string today;
     std::string query;
-
-    void Apod(bool thumb, std::string date = "today");
-
-    void Apod(std::string &startDate, std::string &endDate, bool thumb);
-
-    void Apod(int count, bool thumb);
 
 public:
     Query(std::string &apiKey, enum QueryType type):
             apiKey(apiKey),
             type(type)
-    {
-        auto t = std::time(nullptr);
-        auto tm = *std::localtime(&t);
+    {}
 
-        std::ostringstream oss;
-        oss << std::put_time(&tm, "%d-%m-%Y");
-        this->today = oss.str();
+    void Apod(bool thumb, const std::string& date = "today");
 
-    }
+    void Apod(const std::string &startDate, const std::string &endDate, bool thumb);
+
+    void Apod(int count, bool thumb);
+
+    const std::string &getQuery();
 
 };
 
