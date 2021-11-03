@@ -1,12 +1,12 @@
 #include "client.hpp"
 
-int Client::connect() {
+int Client::connect(ssl_socket &socket, tcp::resolver &resolver) {
     try {
         tcp::resolver::query query("api.nasa.gov", "https");
-        boost::asio::connect(this->socket_->lowest_layer(), this->resolver_->resolve(query));
-        this->socket_->set_verify_mode(ssl::verify_peer);
-        this->socket_->set_verify_callback(ssl::rfc2818_verification("api.nasa.gov"));
-        this->socket_->handshake(ssl_socket::client);
+        boost::asio::connect(socket.lowest_layer(), resolver.resolve(query));
+        socket.set_verify_mode(ssl::verify_peer);
+        socket.set_verify_callback(ssl::rfc2818_verification("api.nasa.gov"));
+        socket.handshake(ssl_socket::client);
 
         std::stringstream ss;
         ss << "Client connected using TLS protocol.";
@@ -20,19 +20,18 @@ int Client::connect() {
 }
 
 void Client::onError(const std::string &log) {
-    this->logger.setStatus(ERROR);
-    this->logger.printLog(log);
-    this->logger.setStatus(OK);
+    this->logger_.setStatus(ERROR);
+    this->logger_.printLog(log);
+    this->logger_.setStatus(OK);
 }
 
 void Client::onAction(const std::string &log) {
-    this->logger.printLog(log);
+    this->logger_.printLog(log);
 }
 
-
-int Client::disconnect() {
+int Client::disconnect(ssl_socket &socket) {
     boost::system::error_code error;
-    this->socket_->lowest_layer().close(error);
+    socket.lowest_layer().close(error);
 
     if(error) {
         std::stringstream ss;
@@ -48,66 +47,111 @@ int Client::disconnect() {
     }
 }
 
-int Client::send(Query &query) {
+int Client::send(ssl_socket &socket, tcp::resolver &resolver, Query &query) {
+
+    std::stringstream ss;
     boost::system::error_code error;
     boost::asio::write(socket, boost::asio::buffer(query.getQuery()),error);
-
     if(error) {
-        std::stringstream ss;
+        ss.str(std::string());
         ss << "Couldn't send request: "
            << error.message();
         onError(ss.str());
         return -1;
     }
     else {
-        std::stringstream ss;
-        ss << "Request sent : \n"
-           << query.getQuery();
+        ss.str(std::string());
+        ss << "Request sent.";
         onAction(ss.str());
-        return 0;
     }
+    return 0;
 }
 
-int Client::receive() {
+int Client::receive(ssl_socket &socket) {
 
     boost::system::error_code error;
-    boost::asio::streambuf receive_buffer;
-
-
-    boost::asio::read(socket, receive_buffer, boost::asio::transfer_all(), error);
-    if( error && error != boost::asio::error::eof ) {
+    char data[BUFF_SIZE];
+    auto buf = boost::asio::buffer(data, BUFF_SIZE);
+    boost::asio::read(socket, boost::asio::buffer(data, BUFF_SIZE), boost::asio::transfer_at_least(1));
+    if(error && error != boost::asio::error::eof) {
         onError("Error in response reception.");
         return -1;
     }
     else
     {
-        std::stringstream ss;
-        ss << boost::asio::buffer_cast<const char*>(receive_buffer.data());
+        this->jsonRep_ = reinterpret_cast<const char *>(boost::asio::buffer_cast<unsigned char *>(buf));
+        size_t start = this->jsonRep_.find('{');
+        this->header_ = this->jsonRep_.substr(0, start);
 
-        const char *filename = genFilename();
-        this->jsonRep = ss.str().c_str();
+        this->jsonRep_.erase(0, start);
         onAction("Response received.");
 
-        buildJson(filename);
-        ss.clear();
-        ss << "JSON file " << filename << " successfully received.";
-        onAction(ss.str());
-        return 0;
+        int id_file = 1;
+        std::string builder = "nasapi-cpp-";
+        while (std::filesystem::exists(builder + std::to_string(id_file)))
+            id_file++;
+        builder.append(std::to_string(id_file));
+        builder.append(".json");
+        auto filename = builder.c_str();
+
+        if (buildJson(filename) == 0)
+        {
+            std::stringstream ss;
+            ss.str(std::string());
+            ss << "JSON file " << filename << " successfully received.";
+            onAction(ss.str());
+        }
+        else
+        {
+            onError("Error in JSON creation");
+            return -1;
+        }
     }
+    return 0;
 }
 
-const char *Client::genFilename() {
-    int id_file = 1;
-    std::string filename = "nasapi-cpp";
-    while (std::filesystem::exists(filename + std::to_string(id_file)))
-        id_file++;
-    filename.append(std::to_string(id_file));
-    const char *res = filename.c_str();
-    return res;
+int Client::Apod(std::string &apiKey) {
+    // Create a context that uses the default paths for
+    // finding CA certificates.
+    ssl::context context(ssl::context::sslv23);
+    context.set_default_verify_paths();
+    boost::asio::io_service io_service;
+    ssl_socket socket(io_service, context);
+    tcp::resolver resolver(io_service);
+
+    Query query(apiKey, APOD);
+    query.Apod();
+
+    if (connect(socket, resolver) == -1)
+    {
+        onError("Couldn't make connection");
+        return -1;
+    }
+
+    if (send(socket, resolver, query) == -1)
+    {
+        onError("send");
+        return -1;
+    }
+
+    if(receive(socket) == -1)
+    {
+        onError("recv");
+        return -1;
+    }
+
+    if (disconnect(socket) == -1)
+    {
+        onError("disconnect");
+        return -1;
+    }
+
+    onAction("APOD written.");
+    return 0;
 }
 
 int Client::buildJson(const char *filename) {
-    json_object *root = json_tokener_parse(this->jsonRep);
+    json_object *root = json_tokener_parse(this->jsonRep_.c_str());
     if (!root) {
         onError("Couldn't parse response.");
         printf("The json object to string:\n\n%s\n", json_object_to_json_string_ext(root, JSON_C_TO_STRING_PRETTY));
