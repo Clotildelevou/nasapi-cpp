@@ -1,11 +1,7 @@
 #include "query.hpp"
 
 
-void Query::Apod() {
-    Apod(false);
-}
-
-void Query::Apod(bool thumb, const std::string& date) {
+void Query::Apod(const std::string& date, bool thumb) {
     std::stringstream ss;
     ss << "GET /planetary/apod?api_key=" << this->apiKey;
 

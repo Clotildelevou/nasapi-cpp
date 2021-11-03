@@ -37,9 +37,7 @@ public:
             type(type)
     {}
 
-    void Apod();
-
-    void Apod(bool thumb, const std::string& date = "today");
+    void Apod(const std::string& date = "today", bool thumb = true);
 
     void Apod(const std::string &startDate, const std::string &endDate, bool thumb);
 
