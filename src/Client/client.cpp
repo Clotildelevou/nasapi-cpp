@@ -1,3 +1,4 @@
+#include <fstream>
 #include "client.hpp"
 
 int Client::connect(ssl_socket &socket, tcp::resolver &resolver) {
@@ -72,12 +73,13 @@ int Client::receive(ssl_socket &socket) {
     boost::system::error_code error;
     char data[BUFF_SIZE];
     auto buf = boost::asio::buffer(data, BUFF_SIZE);
+
     boost::asio::read(socket, boost::asio::buffer(data, BUFF_SIZE), boost::asio::transfer_at_least(1));
-    if(error && error != boost::asio::error::eof) {
+    if(error && error != boost::asio::error::eof) { //Error handling
         onError("Error in response reception.");
         return -1;
     }
-    else
+    else // will build the JSON file response
     {
         this->jsonRep_ = reinterpret_cast<const char *>(boost::asio::buffer_cast<unsigned char *>(buf));
         size_t start = this->jsonRep_.find('{');
@@ -86,14 +88,7 @@ int Client::receive(ssl_socket &socket) {
         this->jsonRep_.erase(0, start);
         onAction("Response received.");
 
-        int id_file = 1;
-        std::string builder = "nasapi-cpp-";
-        while (std::filesystem::exists(builder + std::to_string(id_file)))
-            id_file++;
-        builder.append(std::to_string(id_file));
-        builder.append(".json");
-        auto filename = builder.c_str();
-
+        char filename[16] = "nasapi-cpp.json";
         if (buildJson(filename) == 0)
         {
             std::stringstream ss;
@@ -106,47 +101,20 @@ int Client::receive(ssl_socket &socket) {
             onError("Error in JSON creation");
             return -1;
         }
+
+        std::ofstream hfile("nasapi-cpp-header.txt");
+        if (hfile)
+        {
+            hfile << this->header_;
+            onAction("Corresponding header file created\n");
+        }
+        else
+        {
+            onError("Couldn't create corresponding header file.");
+            return -1;
+        }
+
     }
-    return 0;
-}
-
-int Client::Apod(std::string &apiKey) {
-    // Create a context that uses the default paths for
-    // finding CA certificates.
-    ssl::context context(ssl::context::sslv23);
-    context.set_default_verify_paths();
-    boost::asio::io_service io_service;
-    ssl_socket socket(io_service, context);
-    tcp::resolver resolver(io_service);
-
-    Query query(apiKey, APOD);
-    query.Apod();
-
-    if (connect(socket, resolver) == -1)
-    {
-        onError("Couldn't make connection");
-        return -1;
-    }
-
-    if (send(socket, resolver, query) == -1)
-    {
-        onError("send");
-        return -1;
-    }
-
-    if(receive(socket) == -1)
-    {
-        onError("recv");
-        return -1;
-    }
-
-    if (disconnect(socket) == -1)
-    {
-        onError("disconnect");
-        return -1;
-    }
-
-    onAction("APOD written.");
     return 0;
 }
 
@@ -184,4 +152,122 @@ int Client::buildJson(const char *filename) {
     return 0;
 }
 
+void Client::Apod(std::string &apiKey) {
+    // Create a context that uses the default paths for
+    // finding CA certificates.
+    ssl::context context(ssl::context::sslv23);
+    context.set_default_verify_paths();
+    boost::asio::io_service io_service;
+    ssl_socket socket(io_service, context);
+    tcp::resolver resolver(io_service);
 
+    Query query(apiKey, APOD);
+    query.Apod();
+
+    if (connect(socket, resolver) == -1)
+    {
+        onError("Couldn't make connection");
+        exit(-1);
+    }
+
+    if (send(socket, resolver, query) == -1)
+    {
+        onError("send");
+        exit(-1);
+    }
+
+    if(receive(socket) == -1)
+    {
+        onError("recv");
+        exit(-1);
+    }
+
+    if (disconnect(socket) == -1)
+    {
+        onError("disconnect");
+        exit(-1);
+    }
+
+    onAction("APOD written.");
+    exit(-1);
+}
+
+void Client::Apod(std::string &apiKey, bool thumb, const std::string &date) {
+    // Create a context that uses the default paths for
+    // finding CA certificates.
+    ssl::context context(ssl::context::sslv23);
+    context.set_default_verify_paths();
+    boost::asio::io_service io_service;
+    ssl_socket socket(io_service, context);
+    tcp::resolver resolver(io_service);
+
+    Query query(apiKey, APOD);
+    query.Apod(date, thumb);
+
+    if (connect(socket, resolver) == -1)
+    {
+        onError("Couldn't make connection");
+        exit(-1);
+    }
+
+    if (send(socket, resolver, query) == -1)
+    {
+        onError("send");
+        exit(-1);
+    }
+
+    if(receive(socket) == -1)
+    {
+        onError("recv");
+        exit(-1);
+    }
+
+    if (disconnect(socket) == -1)
+    {
+        onError("disconnect");
+        exit(-1);
+    }
+
+    onAction("APOD written.");
+    exit(-1);
+}
+
+void Client::Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate) {
+    // Create a context that uses the default paths for
+    // finding CA certificates.
+    ssl::context context(ssl::context::sslv23);
+    context.set_default_verify_paths();
+    boost::asio::io_service io_service;
+    ssl_socket socket(io_service, context);
+    tcp::resolver resolver(io_service);
+
+    Query query(apiKey, APOD);
+    query.Apod(startDate, endDate, thumb);
+
+    if (connect(socket, resolver) == -1)
+    {
+        onError("Couldn't make connection");
+        exit(-1);
+    }
+
+    if (send(socket, resolver, query) == -1)
+    {
+        onError("send");
+        exit(-1);
+    }
+
+    if(receive(socket) == -1)
+    {
+        onError("recv");
+        exit(-1);
+    }
+
+    if (disconnect(socket) == -1)
+    {
+        onError("disconnect");
+        exit(-1);
+    }
+
+    onAction("APOD written.");
+    exit(-1);
+}
