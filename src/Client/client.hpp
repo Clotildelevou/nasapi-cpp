@@ -1,5 +1,8 @@
 #pragma once
 
+#include <filesystem>
+#include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -12,47 +15,40 @@
 #include <netdb.h>
 #include <cstring>
 
+
+#include "json.h"
+
 #include "logger.hpp"
+#include "query.hpp"
+
+const int BUFF_SIZE = 4096;
+
+using boost::asio::ip::tcp;
+namespace ssl = boost::asio::ssl;
+typedef ssl::stream<tcp::socket> ssl_socket;
 
 class Client {
 private:
-    int port_;
-    struct hostent *host;
-    sockaddr_in sin_;
-    int socket_;
-    Logger logger;
+    Logger logger_;
+    std::string header_;
+    std::string jsonRep_;
 
     void onError(const std::string &log);
     void onAction(const std::string &log);
+    int buildJson(const char *filename);
+    int connect(ssl_socket &socket, tcp::resolver &resolver);
+    int send(ssl_socket &socket, tcp::resolver &resolver, Query &query);
+    int receive(ssl_socket &socket);
+    int disconnect(ssl_socket &socket);
 
 
 public:
     Client()
     {
-        this->port_ = 80;
-
-        this->logger = Logger();
-
-        this->host = gethostbyname("api.nasa.gov");
-        if ( (host == nullptr) || (host->h_addr == nullptr) ) {
-            onError("Error retrieving DNS information.");
-            exit(1);
-        }
-
-        memcpy(&sin_.sin_addr, this->host->h_addr, this->host->h_length);
-        this->sin_.sin_port = htons(this->port_);
-        this->sin_.sin_family = AF_INET;
-
-        this->socket_ = socket(AF_INET, SOCK_STREAM, 0);
-        if (this->socket_ == -1)
-        {
-            onError("Error in socket creation.");
-            exit(-1);
-        }
+        this->logger_ = Logger();
         onAction("Client created.");
     }
 
-    int connect();
-    int disconnect();
+    int Apod(std::string &apiKey);
 };
 

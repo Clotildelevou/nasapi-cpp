@@ -32,7 +32,8 @@
 *.app
 nasapi-cpp
 
-# Clion
+# Project
 .idea
 cmake-build-debug
 build/
+*.json

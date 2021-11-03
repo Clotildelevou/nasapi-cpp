@@ -14,8 +14,11 @@ option(ENABLE_TESTS "Build tests along with the library" ON)
 
 set(SOURCE_ROOT "${PROJECT_SOURCE_DIR}/src")
 set(EXC_TST "${PROJECT_SOURCE_DIR}/build")
-set(CXX_FLAGS -Wextra -Werror -pedantic -std=c++17 -lamqpcpp -I${SOURCE_ROOT})
-set(LDFLAGS_TEST -fsanitize=address -lamqpcpp)
+set(SOURCE_ROOT "${PROJECT_SOURCE_DIR}/src")
+set(EXC_TST "${PROJECT_SOURCE_DIR}/build")
+set(CXX_FLAGS -Wextra -Werror -pedantic -std=c++17 -lcrypto -lssl -ldl -pthread -lamqpcpp -lboost_log -lboost_system -lboost_thread -lboost_filesystem)
+set(LDFLAGS_TEST -fsanitize=address -lcrypto -lssl -ldl -pthread -lamqpcpp -lboost_log -lboost_system -lboost_thread -lboost_filesystem )
+
 
 # ==========================================
 #             Libraries
@@ -33,6 +36,9 @@ include_directories(
         "src/Client"
         "src/Logger"
         "src/Query"
+        ${JSONC_INCLUDE_DIRS}
+        "/usr/include/openssl"
+        "/usr/include/boost"
 )
 
 # Client
@@ -50,13 +56,21 @@ file(GLOB_RECURSE QUERY_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "src/Query/*.cpp")
 add_library(query STATIC ${QUERY_SOURCES})
 target_compile_options(query PRIVATE ${CXX_FLAGS})
 
+find_package(OpenSSL REQUIRED)
+link_libraries(${OPENSSL_LIBRARIES})
+
+find_package(Boost REQUIRED COMPONENTS system program_options)
+
+set(BOOST_LIBRARIES Boost::system Boost::program_options ${CMAKE_DL_LIBS})
+find_package(PkgConfig)
+pkg_check_modules(JSONC REQUIRED json-c)
+
 
 # ==========================================
 #             Test executables
 # ==========================================
 
 if (ENABLE_TESTS)
-
     include (CTest)
 
     ######Lib2
@@ -76,5 +90,5 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_executable(nasapi-cpp src/main.cpp)
-target_link_libraries(nasapi-cpp PRIVATE ${LIBS}) # you can add other librairies path if necessary
+target_link_libraries(nasapi-cpp PRIVATE ${LIBS} ${JSONC_LIBRARIES} ${OPENSSL_LIBRARIES} ${BOOST_LIBRAIRIES}) # you can add other librairies path if necessary
 target_compile_options(nasapi-cpp PRIVATE ${CXX_FLAGS})
