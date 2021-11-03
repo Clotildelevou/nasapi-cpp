@@ -1,2 +1,3 @@
-# http-request
-First step to make personalized http request
+# Nasapi-cpp
+
+cpp too in order to use NASA's API
