@@ -1,3 +1,3 @@
 # Nasapi-cpp
 
-cpp too in order to use NASA's API
+Small cpp library in order to use NASA's API with TLS protocol.
