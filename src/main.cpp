@@ -2,7 +2,7 @@
 #include "client.hpp"
 
 
-int main(int argv, char *argv[])
+int main(int argc, char *argv[])
 {
     Client client = Client();
     std::string apiKey = std::string(argv[1]);
