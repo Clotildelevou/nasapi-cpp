@@ -2,9 +2,9 @@
 #include "client.hpp"
 
 
-int main(void)
+int main(int argv, char *argv[])
 {
     Client client = Client();
-    std::string apiKey = "byBP90bGzkOdifclHdWVeUecgGg8oj9IoxnTLqW1";
+    std::string apiKey = std::string(argv[1]);
     client.Apod(apiKey);
 }
