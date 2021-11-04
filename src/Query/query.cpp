@@ -47,3 +47,42 @@ void Query::Apod(int count, bool thumb) {
 const std::string &Query::getQuery() {
     return this->query;
 }
+
+void Query::NeoFeed(const std::string &startDate, const std::string &endDate) {
+    std::stringstream ss;
+
+    ss << "GET /neo/rest/v1/feed?"
+       << "start_date=" << startDate
+       << "&end_date=" << endDate
+       << "&api_key=" << this->apiKey;
+
+    ss << " HTTP/1.1\r\n"
+    << "Host: api.nasa.gov"
+    << "\r\n\r\n";;
+    this->query = ss.str();
+}
+
+void Query::NeoLookup(int asteroidId) {
+    std::stringstream ss;
+
+    ss << "GET /neo/rest/v1/neo/"
+    << asteroidId << "?"
+    << "&api_key=" << this->apiKey;
+
+    ss << " HTTP/1.1\r\n"
+    << "Host: api.nasa.gov"
+    << "\r\n\r\n";
+    this->query = ss.str();
+}
+
+void Query::NeoBrowse() {
+    std::stringstream ss;
+
+    ss << "GET /neo/rest/v1/neo/browse/?"
+       << "api_key=" << this->apiKey;
+
+    ss << " HTTP/1.1\r\n"
+    << "Host: api.nasa.gov"
+    << "\r\n\r\n";;
+    this->query = ss.str();
+}
