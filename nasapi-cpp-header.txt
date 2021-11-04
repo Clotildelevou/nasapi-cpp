@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+Date: Wed, 03 Nov 2021 15:41:57 GMT
+Content-Type: application/json
+Content-Length: 1321
+Connection: keep-alive
+Vary: Accept-Encoding
+X-RateLimit-Limit: 2000
+X-RateLimit-Remaining: 1984
+Access-Control-Allow-Origin: *
+Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining
+Age: 0
+Via: http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+X-Cache: MISS
+Strict-Transport-Security: max-age=31536000; preload
+
