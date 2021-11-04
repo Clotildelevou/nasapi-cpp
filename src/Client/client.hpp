@@ -21,7 +21,7 @@
 #include "logger.hpp"
 #include "query.hpp"
 
-const int BUFF_SIZE = 4096;
+const int BUFF_SIZE = 10000;
 
 using boost::asio::ip::tcp;
 namespace ssl = boost::asio::ssl;

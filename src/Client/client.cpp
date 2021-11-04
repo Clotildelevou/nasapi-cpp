@@ -71,49 +71,48 @@ int Client::send(ssl_socket &socket, tcp::resolver &resolver, Query &query) {
 int Client::receive(ssl_socket &socket) {
 
     boost::system::error_code error;
-    char data[BUFF_SIZE];
-    auto buf = boost::asio::buffer(data, BUFF_SIZE);
+    boost::asio::streambuf buffer;
+    while(boost::asio::read_until(socket, buffer, '}'))
+    {
+        if (error && error != boost::asio::error::eof) { //Error handling
+            onError("Error in response reception.");
+            return -1;
+        } else // will build the JSON file response
+        {
+            std::istream is(&buffer);
+            is >> this->jsonRep_;
+            size_t start = this->jsonRep_.find('{');
+            this->header_ = this->jsonRep_.substr(0, start);
 
-    boost::asio::read(socket, boost::asio::buffer(data, BUFF_SIZE), boost::asio::transfer_at_least(1));
-    if(error && error != boost::asio::error::eof) { //Error handling
-        onError("Error in response reception.");
+            this->jsonRep_.erase(0, start);
+
+        }
+    }
+    onAction("Response received.");
+    std::cout << this->jsonRep_;
+    char filename[16] = "nasapi-cpp.json";
+    if (buildJson(filename) == 0)
+    {
+        std::stringstream ss;
+        ss.str(std::string());
+        ss << "JSON file " << filename << " successfully received.";
+        onAction(ss.str());
+    }
+    else
+    {
+        onError("Error in JSON creation");
         return -1;
     }
-    else // will build the JSON file response
+    std::ofstream hfile("nasapi-cpp-header.txt");
+    if (hfile)
     {
-        this->jsonRep_ = reinterpret_cast<const char *>(boost::asio::buffer_cast<unsigned char *>(buf));
-        size_t start = this->jsonRep_.find('{');
-        this->header_ = this->jsonRep_.substr(0, start);
-
-        this->jsonRep_.erase(0, start);
-        onAction("Response received.");
-
-        char filename[16] = "nasapi-cpp.json";
-        if (buildJson(filename) == 0)
-        {
-            std::stringstream ss;
-            ss.str(std::string());
-            ss << "JSON file " << filename << " successfully received.";
-            onAction(ss.str());
-        }
-        else
-        {
-            onError("Error in JSON creation");
-            return -1;
-        }
-
-        std::ofstream hfile("nasapi-cpp-header.txt");
-        if (hfile)
-        {
-            hfile << this->header_;
-            onAction("Corresponding header file created\n");
-        }
-        else
-        {
-            onError("Couldn't create corresponding header file.");
-            return -1;
-        }
-
+        hfile << this->header_;
+        onAction("Corresponding header file created\n");
+    }
+    else
+    {
+        onError("Couldn't create corresponding header file.");
+        return -1;
     }
     return 0;
 }
