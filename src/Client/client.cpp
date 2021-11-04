@@ -152,6 +152,9 @@ int Client::buildJson(const char *filename) {
     return 0;
 }
 
+/**
+ * ... text ...
+ */
 void Client::Apod(std::string &apiKey) {
     // Create a context that uses the default paths for
     // finding CA certificates.
@@ -192,6 +195,9 @@ void Client::Apod(std::string &apiKey) {
     exit(-1);
 }
 
+/**
+ * ... text ...
+ */
 void Client::Apod(std::string &apiKey, bool thumb, const std::string &date) {
     // Create a context that uses the default paths for
     // finding CA certificates.
@@ -232,6 +238,9 @@ void Client::Apod(std::string &apiKey, bool thumb, const std::string &date) {
     exit(-1);
 }
 
+/**
+ * ... text ...
+ */
 void Client::Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate) {
     // Create a context that uses the default paths for
     // finding CA certificates.

@@ -1,18 +1,95 @@
 \hypertarget{class_client}{}\doxysection{Client Class Reference}
 \label{class_client}\index{Client@{Client}}
+
+
+{\ttfamily \#include $<$client.\+hpp$>$}
+
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_client_af1fa021787f3bee04802e439ca623dd9}\label{class_client_af1fa021787f3bee04802e439ca623dd9}} 
-void {\bfseries Apod} (std\+::string \&api\+Key)
-\item 
-\mbox{\Hypertarget{class_client_af203fdd8aa61a3c0ccb15303c7094a51}\label{class_client_af203fdd8aa61a3c0ccb15303c7094a51}} 
-void {\bfseries Apod} (std\+::string \&api\+Key, bool thumb, const std\+::string \&date)
-\item 
-\mbox{\Hypertarget{class_client_a05346878a30125f9451a64c0349c1fe7}\label{class_client_a05346878a30125f9451a64c0349c1fe7}} 
-void {\bfseries Apod} (std\+::string \&api\+Key, bool thumb, const std\+::string \&start\+Date, const std\+::string \&end\+Date)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{class_client_ae51af7aa6b8f591496a8f6a4a87a14bf}{Client}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_client_af1fa021787f3bee04802e439ca623dd9}{Apod}} (std\+::string \&api\+Key)
+\begin{DoxyCompactList}\small\item\em Calls A\+P\+OD A\+PI without args. Calls A\+P\+OD on today\textquotesingle{}s date. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_client_af203fdd8aa61a3c0ccb15303c7094a51}{Apod}} (std\+::string \&api\+Key, bool thumb, const std\+::string \&date)
+\begin{DoxyCompactList}\small\item\em Calls A\+P\+OD A\+PI for a specific date. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_client_a05346878a30125f9451a64c0349c1fe7}{Apod}} (std\+::string \&api\+Key, bool thumb, const std\+::string \&start\+Date, const std\+::string \&end\+Date)
+\begin{DoxyCompactList}\small\item\em Calls A\+P\+OD A\+PI for all days between start\+Date end end\+Date. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+The client class which sends the A\+PI request 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_client_ae51af7aa6b8f591496a8f6a4a87a14bf}\label{class_client_ae51af7aa6b8f591496a8f6a4a87a14bf}} 
+\index{Client@{Client}!Client@{Client}}
+\index{Client@{Client}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Client()}{Client()}}
+{\footnotesize\ttfamily Client\+::\+Client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. 
+
+$<$ Only initializes the logger 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_client_af1fa021787f3bee04802e439ca623dd9}\label{class_client_af1fa021787f3bee04802e439ca623dd9}} 
+\index{Client@{Client}!Apod@{Apod}}
+\index{Apod@{Apod}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Apod()}{Apod()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Client\+::\+Apod (\begin{DoxyParamCaption}\item[{std\+::string \&}]{api\+Key }\end{DoxyParamCaption})}
+
+
+
+Calls A\+P\+OD A\+PI without args. Calls A\+P\+OD on today\textquotesingle{}s date. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api\+Key} & an std\+::string argument.\\
+\hline
+\end{DoxyParams}
+... text ... \mbox{\Hypertarget{class_client_af203fdd8aa61a3c0ccb15303c7094a51}\label{class_client_af203fdd8aa61a3c0ccb15303c7094a51}} 
+\index{Client@{Client}!Apod@{Apod}}
+\index{Apod@{Apod}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Apod()}{Apod()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Client\+::\+Apod (\begin{DoxyParamCaption}\item[{std\+::string \&}]{api\+Key,  }\item[{bool}]{thumb,  }\item[{const std\+::string \&}]{date }\end{DoxyParamCaption})}
+
+
+
+Calls A\+P\+OD A\+PI for a specific date. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api\+Key} & an std\+::string argument. \\
+\hline
+{\em thumb} & a boolean. \\
+\hline
+{\em date} & a const std\+::string argument with Y\+Y\+Y\+Y-\/\+M\+M-\/\+DD format.\\
+\hline
+\end{DoxyParams}
+... text ... \mbox{\Hypertarget{class_client_a05346878a30125f9451a64c0349c1fe7}\label{class_client_a05346878a30125f9451a64c0349c1fe7}} 
+\index{Client@{Client}!Apod@{Apod}}
+\index{Apod@{Apod}!Client@{Client}}
+\doxysubsubsection{\texorpdfstring{Apod()}{Apod()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Client\+::\+Apod (\begin{DoxyParamCaption}\item[{std\+::string \&}]{api\+Key,  }\item[{bool}]{thumb,  }\item[{const std\+::string \&}]{start\+Date,  }\item[{const std\+::string \&}]{end\+Date }\end{DoxyParamCaption})}
+
+
+
+Calls A\+P\+OD A\+PI for all days between start\+Date end end\+Date. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api\+Key} & an std\+::string argument. \\
+\hline
+{\em thumb} & a boolean. \\
+\hline
+{\em start\+Date} & a const std\+::string argument with Y\+Y\+Y\+Y-\/\+M\+M-\/\+DD format. \\
+\hline
+{\em end\+Date} & a const std\+::string argument with Y\+Y\+Y\+Y-\/\+M\+M-\/\+DD format.\\
+\hline
+\end{DoxyParams}
+... text ... 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

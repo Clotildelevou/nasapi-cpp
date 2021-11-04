@@ -24,7 +24,7 @@
    <div id="projectname">nasapi-cpp
    &#160;<span id="projectnumber">0.0.1</span>
    </div>
-   <div id="projectbrief">Small cpp library in order to use NASA&#39;s API with TLS protocol.</div>
+   <div id="projectbrief">Small cpp library in order to use NASA&#39;s API with HTTPS protocol.</div>
   </td>
  </tr>
  </tbody>
@@ -70,19 +70,180 @@ $(function() {
 <div class="title">Client Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="client_8hpp_source.html">client.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af1fa021787f3bee04802e439ca623dd9"><td class="memItemLeft" align="right" valign="top"><a id="af1fa021787f3bee04802e439ca623dd9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Apod</b> (std::string &amp;apiKey)</td></tr>
+<tr class="memitem:ae51af7aa6b8f591496a8f6a4a87a14bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_client.html#ae51af7aa6b8f591496a8f6a4a87a14bf">Client</a> ()</td></tr>
+<tr class="memdesc:ae51af7aa6b8f591496a8f6a4a87a14bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="class_client.html#ae51af7aa6b8f591496a8f6a4a87a14bf">More...</a><br /></td></tr>
+<tr class="separator:ae51af7aa6b8f591496a8f6a4a87a14bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1fa021787f3bee04802e439ca623dd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_client.html#af1fa021787f3bee04802e439ca623dd9">Apod</a> (std::string &amp;apiKey)</td></tr>
+<tr class="memdesc:af1fa021787f3bee04802e439ca623dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls APOD API without args. Calls APOD on today's date.  <a href="class_client.html#af1fa021787f3bee04802e439ca623dd9">More...</a><br /></td></tr>
 <tr class="separator:af1fa021787f3bee04802e439ca623dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af203fdd8aa61a3c0ccb15303c7094a51"><td class="memItemLeft" align="right" valign="top"><a id="af203fdd8aa61a3c0ccb15303c7094a51"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Apod</b> (std::string &amp;apiKey, bool thumb, const std::string &amp;date)</td></tr>
+<tr class="memitem:af203fdd8aa61a3c0ccb15303c7094a51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_client.html#af203fdd8aa61a3c0ccb15303c7094a51">Apod</a> (std::string &amp;apiKey, bool thumb, const std::string &amp;date)</td></tr>
+<tr class="memdesc:af203fdd8aa61a3c0ccb15303c7094a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls APOD API for a specific date.  <a href="class_client.html#af203fdd8aa61a3c0ccb15303c7094a51">More...</a><br /></td></tr>
 <tr class="separator:af203fdd8aa61a3c0ccb15303c7094a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05346878a30125f9451a64c0349c1fe7"><td class="memItemLeft" align="right" valign="top"><a id="a05346878a30125f9451a64c0349c1fe7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Apod</b> (std::string &amp;apiKey, bool thumb, const std::string &amp;startDate, const std::string &amp;endDate)</td></tr>
+<tr class="memitem:a05346878a30125f9451a64c0349c1fe7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_client.html#a05346878a30125f9451a64c0349c1fe7">Apod</a> (std::string &amp;apiKey, bool thumb, const std::string &amp;startDate, const std::string &amp;endDate)</td></tr>
+<tr class="memdesc:a05346878a30125f9451a64c0349c1fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls APOD API for all days between startDate end endDate.  <a href="class_client.html#a05346878a30125f9451a64c0349c1fe7">More...</a><br /></td></tr>
 <tr class="separator:a05346878a30125f9451a64c0349c1fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The client class which sends the API request </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ae51af7aa6b8f591496a8f6a4a87a14bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae51af7aa6b8f591496a8f6a4a87a14bf">&#9670;&nbsp;</a></span>Client()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Client::Client </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<p>&lt; Only initializes the logger </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="af1fa021787f3bee04802e439ca623dd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1fa021787f3bee04802e439ca623dd9">&#9670;&nbsp;</a></span>Apod() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Client::Apod </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>apiKey</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls APOD API without args. Calls APOD on today's date. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">apiKey</td><td>an std::string argument.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>... text ... </p>
+
+</div>
+</div>
+<a id="af203fdd8aa61a3c0ccb15303c7094a51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af203fdd8aa61a3c0ccb15303c7094a51">&#9670;&nbsp;</a></span>Apod() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Client::Apod </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>apiKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>thumb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>date</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls APOD API for a specific date. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">apiKey</td><td>an std::string argument. </td></tr>
+    <tr><td class="paramname">thumb</td><td>a boolean. </td></tr>
+    <tr><td class="paramname">date</td><td>a const std::string argument with YYYY-MM-DD format.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>... text ... </p>
+
+</div>
+</div>
+<a id="a05346878a30125f9451a64c0349c1fe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05346878a30125f9451a64c0349c1fe7">&#9670;&nbsp;</a></span>Apod() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Client::Apod </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>apiKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>thumb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>startDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>endDate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls APOD API for all days between startDate end endDate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">apiKey</td><td>an std::string argument. </td></tr>
+    <tr><td class="paramname">thumb</td><td>a boolean. </td></tr>
+    <tr><td class="paramname">startDate</td><td>a const std::string argument with YYYY-MM-DD format. </td></tr>
+    <tr><td class="paramname">endDate</td><td>a const std::string argument with YYYY-MM-DD format.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>... text ... </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/Client/<a class="el" href="client_8hpp_source.html">client.hpp</a></li>
 <li>src/Client/client.cpp</li>
