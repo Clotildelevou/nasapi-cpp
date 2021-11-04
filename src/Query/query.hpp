@@ -43,6 +43,12 @@ public:
 
     void Apod(int count, bool thumb);
 
+    void NeoFeed(const std::string &startDate, const std::string &endDate);
+
+    void NeoLookup(int asteroidId);
+
+    void NeoBrowse();
+
     const std::string &getQuery();
 
 };
