@@ -80,5 +80,13 @@ public:
       \param endDate a const std::string argument with YYYY-MM-DD format.
     */
     void Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate);
+
+    //! Calls APOD API count times, the days are random.
+    /*!
+      \param apiKey an std::string argument.
+      \param thumb a boolean.
+      \param count an int.
+    */
+    void Apod(std::string &apiKey, bool thumb, int count);
 };
 
