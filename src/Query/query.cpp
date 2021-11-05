@@ -1,4 +1,4 @@
-#include "../../includes/query.hpp"
+#include "query.hpp"
 
 
 void Query::Apod(const std::string& date, bool thumb) {
