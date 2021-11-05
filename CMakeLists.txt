@@ -33,9 +33,7 @@ set(LIBS
         )
 
 include_directories(
-        "src/Client"
-        "src/Logger"
-        "src/Query"
+        "includes/"
         ${JSONC_INCLUDE_DIRS}
         "/usr/include/openssl"
         "/usr/include/boost"

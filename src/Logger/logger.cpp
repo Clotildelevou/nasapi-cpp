@@ -1,4 +1,4 @@
-#include "logger.hpp"
+#include "../../includes/logger.hpp"
 
 enum LoggerStatus Logger::getStatus() {
     return this->status;
