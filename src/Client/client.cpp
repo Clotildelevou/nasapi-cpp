@@ -1,5 +1,29 @@
 #include <fstream>
-#include "../../includes/client.hpp"
+#include <string>
+#include "client.hpp"
+
+std::string makeString(boost::asio::streambuf& streambuf)
+{
+    return {buffers_begin(streambuf.data()),
+            buffers_end(streambuf.data())};
+}
+
+int findParameter(const std::string &header, std::string &parameter)
+{
+    auto retstring = header;
+    size_t start = retstring.find(parameter);
+
+    if (start == std::string::npos)
+        return -1;
+
+    start += parameter.length();
+    retstring = retstring.substr(start, retstring.length());
+    size_t end = retstring.find_first_of('\r');
+
+    if (end == std::string::npos)
+        return -1;
+    return stoi(retstring.substr(0, end));
+}
 
 int Client::connect(ssl_socket &socket, tcp::resolver &resolver) {
     try {
@@ -71,54 +95,37 @@ int Client::send(ssl_socket &socket, tcp::resolver &resolver, Query &query) {
 int Client::receive(ssl_socket &socket) {
 
     boost::system::error_code error;
-    char data[BUFF_SIZE];
-    auto buf = boost::asio::buffer(data, BUFF_SIZE);
-
-    boost::asio::read(socket, boost::asio::buffer(data, BUFF_SIZE), boost::asio::transfer_at_least(1));
+    auto buffer = boost::asio::streambuf();
+    boost::asio::read_until(socket, buffer,"\r\n\r\n" , error);
     if(error && error != boost::asio::error::eof) { //Error handling
         onError("Error in response reception.");
         return -1;
     }
-    else // will build the JSON file response
+    else
     {
-        this->jsonRep_ = reinterpret_cast<const char *>(boost::asio::buffer_cast<unsigned char *>(buf));
-        size_t start = this->jsonRep_.find('{');
-        this->header_ = this->jsonRep_.substr(0, start);
-
-        this->jsonRep_.erase(0, start);
-        onAction("Response received.");
-
-        char filename[16] = "nasapi-cpp.json";
-        if (buildJson(filename) == 0)
-        {
-            std::stringstream ss;
-            ss.str(std::string());
-            ss << "JSON file " << filename << " successfully received.";
-            onAction(ss.str());
-        }
-        else
-        {
-            onError("Error in JSON creation");
-            return -1;
-        }
-
-        std::ofstream hfile("nasapi-cpp-header.txt");
-        if (hfile)
-        {
-            hfile << this->header_;
-            onAction("Corresponding header file created\n");
-        }
-        else
-        {
-            onError("Couldn't create corresponding header file.");
-            return -1;
-        }
-
+        this->header_ = makeString(buffer);
+        onAction("Header received.");
     }
-    return 0;
+
+    std::string param = "Content-Length: ";
+    size_t contentLength = findParameter(this->header_, param);
+    std::cout << contentLength;
+
+    buffer.consume(buffer.size());
+    boost::asio::read(socket, buffer,  boost::asio::transfer_exactly(contentLength), error);
+    if(error && error != boost::asio::error::eof) { //Error handling
+        onError("Error in response reception.");
+        return -1;
+    }
+    else
+    {
+        this->jsonRep_ = makeString(buffer);
+        onAction("Json received.");
+    }
+    return (buildJson() == 0 || buildHeader() == 0);
 }
 
-int Client::buildJson(const char *filename) {
+int Client::buildJson() {
     json_object *root = json_tokener_parse(this->jsonRep_.c_str());
     if (!root) {
         onError("Couldn't parse response.");
@@ -130,7 +137,7 @@ int Client::buildJson(const char *filename) {
         }
         return -1;
     }
-    if(json_object_to_file(filename, root) == -1)
+    if(json_object_to_file("nasapi-cpp.json", root) == -1)
     {
         onError("Couldn't build JSON file.");
         if (json_object_put(root) != 1)
@@ -150,6 +157,22 @@ int Client::buildJson(const char *filename) {
         return -1;
     }
     return 0;
+}
+
+int Client::buildHeader()
+{
+    std::ofstream hfile("nasapi-cpp-header.txt");
+    if (hfile)
+    {
+        hfile << this->header_;
+        onAction("Corresponding header file created\n");
+        return 0;
+    }
+    else
+    {
+        onError("Couldn't create corresponding header file.");
+        return -1;
+    }
 }
 
 void Client::Apod(std::string &apiKey) {

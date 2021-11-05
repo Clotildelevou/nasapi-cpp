@@ -3,11 +3,6 @@
 #include <filesystem>
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
@@ -20,8 +15,6 @@
 
 #include "logger.hpp"
 #include "query.hpp"
-
-const int BUFF_SIZE = 4096;
 
 using boost::asio::ip::tcp;
 namespace ssl = boost::asio::ssl;
@@ -36,7 +29,7 @@ private:
     void onError(const std::string &log);
     void onAction(const std::string &log);
 
-    int buildJson(const char *filename);
+    int buildJson();
 
     int connect(ssl_socket &socket, tcp::resolver &resolver);
     int send(ssl_socket &socket, tcp::resolver &resolver, Query &query);
@@ -55,5 +48,7 @@ public:
     void Apod(std::string &apiKey, bool thumb, const std::string &date);
 
     void Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate);
+
+    int buildHeader();
 };
 
