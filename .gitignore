@@ -37,3 +37,4 @@ nasapi-cpp
 cmake-build-debug
 build/
 *.json
+nasapi-cpp-header.txt
