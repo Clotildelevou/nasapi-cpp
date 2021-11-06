@@ -16,9 +16,15 @@ set(SOURCE_ROOT "${PROJECT_SOURCE_DIR}/src")
 set(EXC_TST "${PROJECT_SOURCE_DIR}/build")
 set(SOURCE_ROOT "${PROJECT_SOURCE_DIR}/src")
 set(EXC_TST "${PROJECT_SOURCE_DIR}/build")
-set(CXX_FLAGS -Wextra -Werror -pedantic -std=c++17 -lcrypto -lssl -ldl -pthread -lamqpcpp -lboost_log -lboost_system -lboost_thread -lboost_filesystem)
-set(LDFLAGS_TEST -fsanitize=address -lcrypto -lssl -ldl -pthread -lamqpcpp -lboost_log -lboost_system -lboost_thread -lboost_filesystem )
+set(CXX_FLAGS -Wextra -Werror -pedantic -std=c++17)
+set(LDFLAGS -lcrypto -lssl -ldl -lboost_system -lboost_thread -lboost_filesystem -ljsoncpp -lpthread)
 
+include_directories(
+        "includes/"
+        "/usr/include/openssl"
+        "/usr/include/boost"
+        ${JSONC_INCLUDE_DIRS}
+)
 
 # ==========================================
 #             Libraries
@@ -31,13 +37,6 @@ set(LIBS
         logger
         query
         )
-
-include_directories(
-        "includes/"
-        ${JSONC_INCLUDE_DIRS}
-        "/usr/include/openssl"
-        "/usr/include/boost"
-)
 
 # Client
 file(GLOB_RECURSE CLIENT_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "src/Client/*.cpp")
@@ -88,5 +87,5 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_executable(nasapi-cpp src/main.cpp)
-target_link_libraries(nasapi-cpp PRIVATE ${LIBS} ${JSONC_LIBRARIES} ${OPENSSL_LIBRARIES} ${BOOST_LIBRAIRIES}) # you can add other librairies path if necessary
-target_compile_options(nasapi-cpp PRIVATE ${CXX_FLAGS})
+target_link_libraries(nasapi-cpp PRIVATE ${LDFLAGS} ${JSONC_LIBRARIES} ${OPENSSL_LIBRARIES} ${BOOST_LIBRAIRIES} ${LIBS}) # you can add other librairies path if necessary
+target_compile_options(nasapi-cpp PRIVATE ${CXX_FLAGS} ${LDFLAGS})
