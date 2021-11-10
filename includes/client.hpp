@@ -37,7 +37,7 @@ namespace nasapi
         int buildHeader();
 
         int connect(ssl_socket &socket, tcp::resolver &resolver);
-        int send(ssl_socket &socket, tcp::resolver &resolver, Query &query);
+        int send(ssl_socket &socket, Query &query);
         int receive(ssl_socket &socket);
         int disconnect(ssl_socket &socket);
 

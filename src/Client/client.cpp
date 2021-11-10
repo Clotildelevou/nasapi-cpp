@@ -125,7 +125,7 @@ namespace nasapi
         }
     }
 
-    int Client::send(ssl_socket &socket, tcp::resolver &resolver, Query &query) {
+    int Client::send(ssl_socket &socket, Query &query) {
 
         std::stringstream ss;
         boost::system::error_code error;
