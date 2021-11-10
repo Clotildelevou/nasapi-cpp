@@ -30,11 +30,14 @@ private:
     void onAction(const std::string &log);
 
     int buildJson();
+    int buildHeader();
 
     int connect(ssl_socket &socket, tcp::resolver &resolver);
     int send(ssl_socket &socket, tcp::resolver &resolver, Query &query);
     int receive(ssl_socket &socket);
     int disconnect(ssl_socket &socket);
+
+    void queryLaunch(ssl_socket &socket, tcp::resolver &resolver, Query &query);
 
 public:
     Client()
@@ -48,7 +51,5 @@ public:
     void Apod(std::string &apiKey, bool thumb, const std::string &date);
 
     void Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate);
-
-    int buildHeader();
 };
 

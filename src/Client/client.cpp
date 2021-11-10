@@ -25,6 +25,18 @@ int findParameter(const std::string &header, std::string &parameter)
     return stoi(retstring.substr(0, end));
 }
 
+
+void Client::onError(const std::string &log) {
+    this->logger_.setStatus(ERROR);
+    this->logger_.printLog(log);
+    this->logger_.setStatus(OK);
+}
+
+void Client::onAction(const std::string &log) {
+    this->logger_.printLog(log);
+}
+
+
 int Client::connect(ssl_socket &socket, tcp::resolver &resolver) {
     try {
         tcp::resolver::query query("api.nasa.gov", "https");
@@ -42,16 +54,6 @@ int Client::connect(ssl_socket &socket, tcp::resolver &resolver) {
         onError(e.what());
         return -1;
     }
-}
-
-void Client::onError(const std::string &log) {
-    this->logger_.setStatus(ERROR);
-    this->logger_.printLog(log);
-    this->logger_.setStatus(OK);
-}
-
-void Client::onAction(const std::string &log) {
-    this->logger_.printLog(log);
 }
 
 int Client::disconnect(ssl_socket &socket) {
@@ -104,6 +106,7 @@ int Client::receive(ssl_socket &socket) {
     else
     {
         this->header_ = makeString(buffer);
+        this->header_.erase(headerSize, this->header_.size());
         onAction("Header received.");
     }
 
@@ -123,6 +126,7 @@ int Client::receive(ssl_socket &socket) {
     }
     return (buildJson() == 0 && buildHeader() == 0);
 }
+
 
 int Client::buildJson() {
     json_object *root = json_tokener_parse(this->jsonRep_.c_str());
@@ -165,7 +169,7 @@ int Client::buildHeader()
     {
         out << this->header_;
         out.close();
-        onAction("Corresponding header file created\n");
+        onAction("Header file created\n");
         return 0;
     }
     else
@@ -175,18 +179,9 @@ int Client::buildHeader()
     }
 }
 
-void Client::Apod(std::string &apiKey) {
-    // Create a context that uses the default paths for
-    // finding CA certificates.
-    ssl::context context(ssl::context::sslv23);
-    context.set_default_verify_paths();
-    boost::asio::io_service io_service;
-    ssl_socket socket(io_service, context);
-    tcp::resolver resolver(io_service);
 
-    Query query(apiKey, APOD);
-    query.Apod();
 
+void Client::queryLaunch(ssl_socket &socket, tcp::resolver &resolver, Query &query) {
     if (connect(socket, resolver) == -1)
     {
         onError("Couldn't make connection");
@@ -210,86 +205,51 @@ void Client::Apod(std::string &apiKey) {
         onError("disconnect");
         exit(-1);
     }
+}
+
+void Client::Apod(std::string &apiKey) {
+    ssl::context context(ssl::context::sslv23);
+    context.set_default_verify_paths();
+    boost::asio::io_service io_service;
+    ssl_socket socket(io_service, context);
+    tcp::resolver resolver(io_service);
+
+    Query query(apiKey);
+    query.Apod();
+
+    queryLaunch(socket, resolver, query);
 
     onAction("APOD written.");
     exit(-1);
 }
 
 void Client::Apod(std::string &apiKey, bool thumb, const std::string &date) {
-    // Create a context that uses the default paths for
-    // finding CA certificates.
     ssl::context context(ssl::context::sslv23);
     context.set_default_verify_paths();
     boost::asio::io_service io_service;
     ssl_socket socket(io_service, context);
     tcp::resolver resolver(io_service);
 
-    Query query(apiKey, APOD);
+    Query query(apiKey);
     query.Apod(date, thumb);
 
-    if (connect(socket, resolver) == -1)
-    {
-        onError("Couldn't make connection");
-        exit(-1);
-    }
-
-    if (send(socket, resolver, query) == -1)
-    {
-        onError("send");
-        exit(-1);
-    }
-
-    if(receive(socket) == -1)
-    {
-        onError("recv");
-        exit(-1);
-    }
-
-    if (disconnect(socket) == -1)
-    {
-        onError("disconnect");
-        exit(-1);
-    }
+    queryLaunch(socket, resolver, query);
 
     onAction("APOD written.");
     exit(-1);
 }
 
 void Client::Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate) {
-    // Create a context that uses the default paths for
-    // finding CA certificates.
     ssl::context context(ssl::context::sslv23);
     context.set_default_verify_paths();
     boost::asio::io_service io_service;
     ssl_socket socket(io_service, context);
     tcp::resolver resolver(io_service);
 
-    Query query(apiKey, APOD);
+    Query query(apiKey);
     query.Apod(startDate, endDate, thumb);
 
-    if (connect(socket, resolver) == -1)
-    {
-        onError("Couldn't make connection");
-        exit(-1);
-    }
-
-    if (send(socket, resolver, query) == -1)
-    {
-        onError("send");
-        exit(-1);
-    }
-
-    if(receive(socket) == -1)
-    {
-        onError("recv");
-        exit(-1);
-    }
-
-    if (disconnect(socket) == -1)
-    {
-        onError("disconnect");
-        exit(-1);
-    }
+    queryLaunch(socket, resolver, query);
 
     onAction("APOD written.");
     exit(-1);
