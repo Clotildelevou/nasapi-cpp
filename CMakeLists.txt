@@ -17,7 +17,7 @@ set(EXC_TST "${PROJECT_SOURCE_DIR}/build")
 set(SOURCE_ROOT "${PROJECT_SOURCE_DIR}/src")
 set(EXC_TST "${PROJECT_SOURCE_DIR}/build")
 set(CXX_FLAGS -Wextra -Werror -pedantic -std=c++17)
-set(LDFLAGS -lcrypto -lssl -ldl -lboost_system -lboost_thread -lboost_filesystem -ljsoncpp -lpthread)
+set(LDFLAGS -lcrypto -lssl -ldl -lboost_system -lboost_thread -lboost_filesystem -ljson-c -lpthread)
 
 include_directories(
         "includes/"
