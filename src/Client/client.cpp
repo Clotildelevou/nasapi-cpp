@@ -96,7 +96,7 @@ int Client::receive(ssl_socket &socket) {
 
     boost::system::error_code error;
     auto buffer = boost::asio::streambuf();
-    boost::asio::read_until(socket, buffer,"\r\n\r\n" , error);
+    size_t headerSize = boost::asio::read_until(socket, buffer,"\r\n\r\n" , error);
     if(error && error != boost::asio::error::eof) { //Error handling
         onError("Error in response reception.");
         return -1;
@@ -109,10 +109,9 @@ int Client::receive(ssl_socket &socket) {
 
     std::string param = "Content-Length: ";
     size_t contentLength = findParameter(this->header_, param);
-    std::cout << contentLength;
 
-    buffer.consume(buffer.size());
-    boost::asio::read(socket, buffer,  boost::asio::transfer_exactly(contentLength), error);
+    buffer.consume(headerSize);
+    boost::asio::read(socket, buffer,  boost::asio::transfer_exactly(contentLength - buffer.size()), error);
     if(error && error != boost::asio::error::eof) { //Error handling
         onError("Error in response reception.");
         return -1;
@@ -122,7 +121,7 @@ int Client::receive(ssl_socket &socket) {
         this->jsonRep_ = makeString(buffer);
         onAction("Json received.");
     }
-    return (buildJson() == 0 || buildHeader() == 0);
+    return (buildJson() == 0 && buildHeader() == 0);
 }
 
 int Client::buildJson() {
@@ -161,10 +160,11 @@ int Client::buildJson() {
 
 int Client::buildHeader()
 {
-    std::ofstream hfile("nasapi-cpp-header.txt");
-    if (hfile)
+    std::ofstream out("nasapi-cpp-header.txt");
+    if (out)
     {
-        hfile << this->header_;
+        out << this->header_;
+        out.close();
         onAction("Corresponding header file created\n");
         return 0;
     }
