@@ -59,6 +59,12 @@ namespace nasapi
         void EarthImagery(float lat, float lon, float dim, const std::string &date);
 
         void EarthAssets(float lat, float lon, const std::string &date, float dim);
+
+        void EonetEvents(const std::string &source, const std::string &status, int limit, int days);
+
+        void EonetCategories(int categoryID, const std::string &source, const std::string &status, int limit, int days);
+
+        void EonetLayers(int categoryID);
     };
 }
 

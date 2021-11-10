@@ -292,4 +292,60 @@ namespace nasapi
         this->query = ss.str();
     }
 
+    void Query::EonetEvents(const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/v2.1/events?";
+
+        if (!source.empty())
+            ss << "&source=" << source;
+        if (!status.empty())
+            ss << "&status=" << status;
+        if (limit != 0)
+            ss << "&limit=" << limit;
+        if (days != 0)
+            ss << "&days=" << days;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: eonet.sci.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EonetCategories(int categoryID, const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/v2.1/categories/" << categoryID << "?";
+
+        if (!source.empty())
+            ss << "&source=" << source;
+        if (!status.empty())
+            ss << "&status=" << status;
+        if (limit != 0)
+            ss << "&limit=" << limit;
+        if (days != 0)
+            ss << "&days=" << days;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: eonet.sci.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EonetLayers(int categoryID)
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/v2.1/layers/"
+        << categoryID;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: eonet.sci.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+
 }

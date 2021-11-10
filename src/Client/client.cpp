@@ -518,4 +518,37 @@ namespace nasapi
         exit(-1);
     }
 
+    void Client::EonetEvents(std::string &apiKey, const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EonetEvents(source, status, limit, days);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EonetEvents written.");
+        exit(-1);
+    }
+
+    void Client::EonetCategories(std::string &apiKey, int categorieID, const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EonetCategories(categorieID, source, status, limit, days);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EonetCategories written.");
+        exit(-1);
+    }
 }
