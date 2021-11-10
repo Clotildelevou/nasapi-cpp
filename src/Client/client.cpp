@@ -187,7 +187,7 @@ namespace nasapi
             exit(-1);
         }
 
-        if (send(socket, resolver, query) == -1)
+        if (send(socket, query) == -1)
         {
             onError("send");
             exit(-1);
