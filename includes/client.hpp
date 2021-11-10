@@ -54,6 +54,10 @@ namespace nasapi
 
         void Apod(std::string &apiKey, bool thumb, const std::string &date);
 
-    void Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate);
-};
+        void Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate);
+
+        void Apod(std::string &apiKey, bool thumb, int count);
+    };
+}
+
 

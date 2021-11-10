@@ -250,6 +250,23 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-    onAction("APOD written.");
-    exit(-1);
+        onAction("APOD written.");
+        exit(-1);
+    }
+
+    void Client::Apod(std::string &apiKey, bool thumb, int count) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.Apod(count, thumb);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("APOD written.");
+        exit(-1);
+    }
 }
