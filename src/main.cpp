@@ -1,4 +1,6 @@
-#include "../includes/client.hpp"
+#include "client.hpp"
+
+using namespace nasapi;
 
 int main(void)
 {

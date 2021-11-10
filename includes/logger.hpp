@@ -5,28 +5,31 @@
 #include <iomanip>
 #include <iostream>
 
-enum LoggerStatus
+namespace nasapi
 {
-    ERROR,
-    OK
-};
+    enum LoggerStatus
+    {
+        ERROR,
+        OK
+    };
 
-class Logger {
-private:
-    enum LoggerStatus status;
+    class Logger {
+    private:
+        enum LoggerStatus status;
 
-public:
+    public:
 
-    Logger():
-    status(OK)
-    {}
+        Logger():
+                status(OK)
+        {}
 
-    enum LoggerStatus getStatus();
+        enum LoggerStatus getStatus();
 
-    void setStatus(enum LoggerStatus newStatus);
+        void setStatus(enum LoggerStatus newStatus);
 
-    void printLog(const std::string &log);
-};
+        void printLog(const std::string &log);
+    };
+}
 
 
 

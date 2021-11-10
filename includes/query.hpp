@@ -5,30 +5,34 @@
 #include <ctime>
 #include <iomanip>
 
-class Query {
-private:
-    std::string apiKey;
-    std::string query;
+namespace nasapi
+{
+    class Query {
+    private:
+        std::string apiKey;
+        std::string query;
 
-public:
-    Query(std::string &apiKey):
-            apiKey(apiKey)
-    {}
+    public:
+        Query(std::string &apiKey):
+                apiKey(apiKey)
+        {}
 
-    void Apod(const std::string& date = "today", bool thumb = true);
+        void Apod(const std::string& date = "today", bool thumb = true);
 
-    void Apod(const std::string &startDate, const std::string &endDate, bool thumb);
+        void Apod(const std::string &startDate, const std::string &endDate, bool thumb);
 
-    void Apod(int count, bool thumb);
+        void Apod(int count, bool thumb);
 
-    void NeoFeed(const std::string &startDate, const std::string &endDate);
+        void NeoFeed(const std::string &startDate, const std::string &endDate);
 
-    void NeoLookup(int asteroidId);
+        void NeoLookup(int asteroidId);
 
-    void NeoBrowse();
+        void NeoBrowse();
 
-    const std::string &getQuery();
+        const std::string &getQuery();
 
-};
+    };
+}
+
 
 

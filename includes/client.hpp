@@ -9,6 +9,8 @@
 #include <sstream>
 #include <netdb.h>
 #include <cstring>
+#include <fstream>
+#include <string>
 
 
 #include "json.h"
@@ -20,35 +22,37 @@ using boost::asio::ip::tcp;
 namespace ssl = boost::asio::ssl;
 typedef ssl::stream<tcp::socket> ssl_socket;
 
-class Client {
-private:
-    Logger logger_;
-    std::string header_;
-    std::string jsonRep_;
+namespace nasapi
+{
+    class Client {
+    private:
+        Logger logger_;
+        std::string header_;
+        std::string jsonRep_;
 
-    void onError(const std::string &log);
-    void onAction(const std::string &log);
+        void onError(const std::string &log);
+        void onAction(const std::string &log);
 
-    int buildJson();
-    int buildHeader();
+        int buildJson();
+        int buildHeader();
 
-    int connect(ssl_socket &socket, tcp::resolver &resolver);
-    int send(ssl_socket &socket, tcp::resolver &resolver, Query &query);
-    int receive(ssl_socket &socket);
-    int disconnect(ssl_socket &socket);
+        int connect(ssl_socket &socket, tcp::resolver &resolver);
+        int send(ssl_socket &socket, tcp::resolver &resolver, Query &query);
+        int receive(ssl_socket &socket);
+        int disconnect(ssl_socket &socket);
 
-    void queryLaunch(ssl_socket &socket, tcp::resolver &resolver, Query &query);
+        void queryLaunch(ssl_socket &socket, tcp::resolver &resolver, Query &query);
 
-public:
-    Client()
-    {
-        this->logger_ = Logger();
-        onAction("Client created.");
-    }
+    public:
+        Client()
+        {
+            this->logger_ = Logger();
+            onAction("Client created.");
+        }
 
-    void Apod(std::string &apiKey);
+        void Apod(std::string &apiKey);
 
-    void Apod(std::string &apiKey, bool thumb, const std::string &date);
+        void Apod(std::string &apiKey, bool thumb, const std::string &date);
 
     void Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate);
 };
