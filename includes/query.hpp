@@ -12,6 +12,8 @@ namespace nasapi
         std::string apiKey;
         std::string query;
 
+        const std::string &getQuery();
+
     public:
         Query(std::string &apiKey):
                 apiKey(apiKey)
@@ -28,8 +30,6 @@ namespace nasapi
         void NeoLookup(int asteroidId);
 
         void NeoBrowse();
-
-        const std::string &getQuery();
 
         void DonkiCME(const std::string &startDate, const std::string &endDate);
 
