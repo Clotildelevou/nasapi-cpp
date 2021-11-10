@@ -5,36 +5,14 @@
 #include <ctime>
 #include <iomanip>
 
-enum QueryType
-{
-    APOD,
-    ANW,
-    DONKI,
-    EARTH,
-    EONET,
-    EPIC,
-    EXOPLANET,
-    GENELAB,
-    INSIGHT,
-    MRP,
-    NIVL,
-    TECHTRANS,
-    SSC,
-    SSDCNEOS,
-    TECHPORT,
-    VMMT
-};
-
 class Query {
 private:
     std::string apiKey;
-    enum QueryType type;
     std::string query;
 
 public:
-    Query(std::string &apiKey, enum QueryType type):
-            apiKey(apiKey),
-            type(type)
+    Query(std::string &apiKey):
+            apiKey(apiKey)
     {}
 
     void Apod(const std::string& date = "today", bool thumb = true);
