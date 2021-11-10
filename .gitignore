@@ -35,6 +35,7 @@ nasapi-cpp
 # Project
 .idea
 cmake-build-debug
+cmake-build-release
 build/
 *.json
 nasapi-cpp-header.txt
