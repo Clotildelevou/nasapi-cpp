@@ -282,7 +282,7 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("APOD written.");
+        onAction("NeoFeed written.");
         exit(-1);
     }
 
@@ -298,7 +298,7 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("APOD written.");
+        onAction("Neo Lookup written.");
         exit(-1);
     }
 
@@ -314,7 +314,172 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("APOD written.");
+        onAction("Neo Browse written.");
+        exit(-1);
+    }
+
+    void Client::DonkiCME(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiCME(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiCME written.");
+        exit(-1);
+    }
+
+    void Client::DonkiCMEAnalysis(std::string &apiKey, const std::string &startDate, const std::string &endDate,
+                                  bool mostAccurateOnly = true, bool completeEntryOnly = true, int speed = 0,
+                                  int halfAngle = 0, const std::string& catalog = "ALL",
+                                  const std::string& keyword = "NONE")
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiCMEAnalysis(startDate, endDate, mostAccurateOnly, completeEntryOnly, speed,
+                               halfAngle, catalog, keyword);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiCME written.");
+        exit(-1);
+    }
+
+    void Client::DonkiGST(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiGST(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiGST written.");
+        exit(-1);
+    }
+
+    void Client::DonkiIPS(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiIPS(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiIPS written.");
+        exit(-1);
+    }
+
+    void Client::DonkiFLR(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiFLR(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiFLR written.");
+        exit(-1);
+    }
+
+    void Client::DonkiSEP(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiSEP(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiSEP written.");
+        exit(-1);
+    }
+
+    void Client::DonkiMPC(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiMPC(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiMPC written.");
+        exit(-1);
+    }
+
+    void Client::DonkiRBE(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiRBE(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiRBE written.");
+        exit(-1);
+    }
+
+    void Client::DonkiHSS(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiHSS(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiHSS written.");
+        exit(-1);
+    }
+
+    void Client::DonkiWSA(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.DonkiWSA(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("DonkiWSA written.");
         exit(-1);
     }
 }

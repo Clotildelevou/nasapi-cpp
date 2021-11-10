@@ -63,6 +63,27 @@ namespace nasapi
         void NeoLookup(std::string &apiKey, int asteroidId);
 
         void NeoBrowse(std::string &apiKey);
+
+        void DonkiCME(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void DonkiHSS(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void DonkiWSA(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void DonkiRBE(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void DonkiMPC(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void DonkiFLR(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void DonkiIPS(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void DonkiGST(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void
+        DonkiCMEAnalysis(std::string &apiKey, const std::string &startDate, const std::string &endDate,
+                         bool mostAccurateOnly, bool completeEntryOnly, int speed, int halfAngle,
+                         const std::string &catalog, const std::string &keyword);
     };
 }
 
