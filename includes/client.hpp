@@ -57,6 +57,12 @@ namespace nasapi
         void Apod(std::string &apiKey, bool thumb, const std::string &startDate, const std::string &endDate);
 
         void Apod(std::string &apiKey, bool thumb, int count);
+
+        void NeoFeed(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void NeoLookup(std::string &apiKey, int asteroidId);
+
+        void NeoBrowse(std::string &apiKey);
     };
 }
 

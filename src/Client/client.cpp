@@ -269,4 +269,52 @@ namespace nasapi
         onAction("APOD written.");
         exit(-1);
     }
+
+    void Client::NeoFeed(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.NeoFeed(startDate, endDate);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("APOD written.");
+        exit(-1);
+    }
+
+    void Client::NeoLookup(std::string &apiKey, int asteroidId) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.NeoLookup(asteroidId);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("APOD written.");
+        exit(-1);
+    }
+
+    void Client::NeoBrowse(std::string &apiKey) {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.NeoBrowse();
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("APOD written.");
+        exit(-1);
+    }
 }
