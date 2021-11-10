@@ -76,14 +76,21 @@ namespace nasapi
 
         void DonkiFLR(std::string &apiKey, const std::string &startDate, const std::string &endDate);
 
-        void DonkiIPS(std::string &apiKey, const std::string &startDate, const std::string &endDate);
-
         void DonkiGST(std::string &apiKey, const std::string &startDate, const std::string &endDate);
 
-        void
-        DonkiCMEAnalysis(std::string &apiKey, const std::string &startDate, const std::string &endDate,
+        void DonkiIPS(std::string &apiKey, const std::string &startDate, const std::string &endDate,
+                      const std::string &location,
+                      const std::string &catalog);
+
+        void DonkiCMEAnalysis(std::string &apiKey, const std::string &startDate, const std::string &endDate,
                          bool mostAccurateOnly, bool completeEntryOnly, int speed, int halfAngle,
                          const std::string &catalog, const std::string &keyword);
+
+        void DonkiSEP(std::string &apiKey, const std::string &startDate, const std::string &endDate);
+
+        void EarthImagery(std::string &apiKey, float lat, float lon, float dim, const std::string &date);
+
+        void EarthAssets(std::string &apiKey, float lat, float lon, const std::string &date, float dim);
     };
 }
 

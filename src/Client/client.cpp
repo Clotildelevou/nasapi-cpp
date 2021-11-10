@@ -371,7 +371,8 @@ namespace nasapi
         exit(-1);
     }
 
-    void Client::DonkiIPS(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
+    void Client::DonkiIPS(std::string &apiKey, const std::string &startDate, const std::string &endDate, const std::string& location = "ALL",
+                          const std::string& catalog = "ALL") {
         ssl::context context(ssl::context::sslv23);
         context.set_default_verify_paths();
         boost::asio::io_service io_service;
@@ -379,7 +380,7 @@ namespace nasapi
         tcp::resolver resolver(io_service);
 
         Query query(apiKey);
-        query.DonkiIPS(startDate, endDate);
+        query.DonkiIPS(startDate, endDate, location, catalog);
 
         queryLaunch(socket, resolver, query);
 
@@ -482,4 +483,39 @@ namespace nasapi
         onAction("DonkiWSA written.");
         exit(-1);
     }
+
+    void Client::EarthImagery(std::string &apiKey, float lat, float lon, float dim = 0.25, const std::string& date = "today")
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EarthImagery(lat, lon, dim, date);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EarthImagery written.");
+        exit(-1);
+    }
+
+    void Client::EarthAssets(std::string &apiKey, float lat, float lon, const std::string& date, float dim = 0.25)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EarthAssets(lat, lon, date, dim);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EarthAsset written.");
+        exit(-1);
+    }
+
 }

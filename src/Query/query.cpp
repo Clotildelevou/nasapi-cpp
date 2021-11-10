@@ -251,4 +251,45 @@ namespace nasapi
            << "\r\n\r\n";;
         this->query = ss.str();
     }
+
+    void Query::EarthImagery(float lat, float lon, float dim = 0.25, const std::string& date = "today")
+    {
+        std::stringstream ss;
+
+        ss << "GET /planetary/earth/imagery?"
+           << "lat=" << lat
+           << "&lon=" << lon;
+        if (dim != 0.25)
+            ss << "&dim=" << dim;
+        if (date != "today")
+            ss << "&date=" << date;
+
+        ss << "&api_key=" << this->apiKey;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: api.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EarthAssets(float lat, float lon, const std::string& date, float dim = 0.25)
+    {
+        std::stringstream ss;
+
+        ss << "GET /planetary/earth/assets?"
+           << "lat=" << lat
+           << "&lon=" << lon
+           << "&date=" << date;
+
+        if (dim != 0.25)
+            ss << "&dim=" << dim;
+
+        ss << "&api_key=" << this->apiKey;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: api.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
 }

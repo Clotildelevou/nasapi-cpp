@@ -12,12 +12,14 @@ namespace nasapi
         std::string apiKey;
         std::string query;
 
-        const std::string &getQuery();
-
     public:
         Query(std::string &apiKey):
                 apiKey(apiKey)
         {}
+
+
+        const std::string &getQuery();
+
 
         void Apod(const std::string& date = "today", bool thumb = true);
 
@@ -53,6 +55,10 @@ namespace nasapi
         void DonkiHSS(const std::string &startDate, const std::string &endDate);
 
         void DonkiWSA(const std::string &startDate, const std::string &endDate);
+
+        void EarthImagery(float lat, float lon, float dim, const std::string &date);
+
+        void EarthAssets(float lat, float lon, const std::string &date, float dim);
     };
 }
 
