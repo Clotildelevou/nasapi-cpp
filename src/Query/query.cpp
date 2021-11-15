@@ -42,12 +42,16 @@ namespace nasapi
         std::stringstream ss;
 
         ss << "GET /planetary/apod?api_key=" << this->apiKey
-           << "&count=" << count
-           << " HTTP/1.0\r\n"
+           << "&count=" << count;
+        if (!thumb)
+            ss << "&thumb=false";
+
+        ss << " HTTP/1.0\r\n"
            << "Host: api.nasa.gov"
            << "\r\n\r\n";
         this->query = ss.str();
     }
+
 
     void Query::NeoFeed(const std::string &startDate, const std::string &endDate) {
         std::stringstream ss;
@@ -87,6 +91,7 @@ namespace nasapi
            << "\r\n\r\n";;
         this->query = ss.str();
     }
+
 
     void Query::DonkiCME(const std::string &startDate, const std::string &endDate) {
         std::stringstream ss;
@@ -252,6 +257,7 @@ namespace nasapi
         this->query = ss.str();
     }
 
+
     void Query::EarthImagery(float lat, float lon, float dim = 0.25, const std::string& date = "today")
     {
         std::stringstream ss;
@@ -291,6 +297,7 @@ namespace nasapi
            << "\r\n\r\n";;
         this->query = ss.str();
     }
+
 
     void Query::EonetEvents(const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
     {
@@ -346,6 +353,7 @@ namespace nasapi
            << "\r\n\r\n";;
         this->query = ss.str();
     }
+
 
     void Query::EpicNatural()
     {
@@ -444,6 +452,39 @@ namespace nasapi
         << collection << "/" << year << "/" << month << "/" << day << "/" << imageType << "/" << filename;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+
+    void Query::Exoplanet(const std::string &table, const std::string &select, const std::string &count,
+                          const std::string &where, const std::string &order, int ra = 0, int dec = 0,
+                          const std::string &radius = "", const std::string &format = "")
+    {
+        std::stringstream ss;
+
+        ss << "GET /nstedAPI/nph-nstedAPI?";
+        if (!table.empty())
+            ss << "&table=" << table;
+        if (!select.empty())
+            ss << "&select=" << select;
+        if (!count.empty())
+            ss << "&count=" << count;
+        if (!where.empty())
+            ss << "&where=" << where;
+        if (!order.empty())
+            ss << "&order=" << order;
+        if (ra != 0)
+            ss << "&ra=" << ra;
+        if (dec != 0)
+            ss << "&dec=" << dec;
+        if (!radius.empty())
+            ss << "&radius=" << radius;
+        if (!format.empty())
+            ss << "&format=" << format;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: exoplanetarchive.ipac.caltech.edu"
            << "\r\n\r\n";;
         this->query = ss.str();
     }
