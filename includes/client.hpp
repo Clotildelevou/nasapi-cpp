@@ -122,6 +122,11 @@ namespace nasapi
         void EpicArchive(std::string &apiKey, const std::string &collection, const std::string &year,
                          const std::string &month,
                          const std::string &day, const std::string &imageType, const std::string &filename);
+
+        void
+        Exoplanet(std::string &apiKey, const std::string &table, const std::string &select, const std::string &count,
+                  const std::string &where, const std::string &order, int ra, int dec, const std::string &radius,
+                  const std::string &format);
     };
 }
 

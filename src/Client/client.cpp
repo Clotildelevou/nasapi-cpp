@@ -729,4 +729,23 @@ namespace nasapi
         onAction("EpicArchive written.");
         exit(-1);
     }
+
+    void Client::Exoplanet(std::string &apiKey, const std::string &table, const std::string &select,
+                           const std::string &count, const std::string &where, const std::string &order, int ra = 0,
+                           int dec = 0, const std::string &radius = "", const std::string &format = "")
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.Exoplanet(table, select, count, where, order, ra, dec, radius, format);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicArchive written.");
+        exit(-1);
+    }
 }
