@@ -557,7 +557,7 @@ namespace nasapi
         exit(-1);
     }
 
-    void Client::EonetLayers(std::string &apiKey, int categorieID, const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
+    void Client::EonetLayers(std::string &apiKey, int categorieID)
     {
         ssl::context context(ssl::context::sslv23);
         context.set_default_verify_paths();
@@ -656,7 +656,7 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("EpicNaturalAll written.");
+        onAction("EpicEnhanced written.");
         exit(-1);
     }
 
@@ -673,7 +673,7 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("EpicNaturalAll written.");
+        onAction("EpicEnhancedDate written.");
         exit(-1);
     }
 
@@ -690,7 +690,7 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("EpicNaturalAll written.");
+        onAction("EpicEnhancedAll written.");
         exit(-1);
     }
 
@@ -707,7 +707,7 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("EpicNaturalAll written.");
+        onAction("EpicEnhancedAvailable written.");
         exit(-1);
     }
 
@@ -726,7 +726,7 @@ namespace nasapi
 
         queryLaunch(socket, resolver, query);
 
-        onAction("EpicNaturalAll written.");
+        onAction("EpicArchive written.");
         exit(-1);
     }
 }

@@ -96,16 +96,12 @@ namespace nasapi
         EonetEvents(std::string &apiKey, const std::string &source, const std::string &status, int limit, int days);
 
         void
-        EonetCategories(std::string &apiKey, const std::string &source, const std::string &status, int limit, int days);
-
-        void
         EonetCategories(std::string &apiKey, int categorieID, const std::string &source, const std::string &status,
                         int limit,
                         int days);
 
-        void EonetLayers(std::string &apiKey, int categorieID, const std::string &source, const std::string &status,
-                         int limit,
-                         int days);
+        void EonetLayers(std::string &apiKey, int categorieID);
+
 
         void EpicNatural(std::string &apiKey);
 
