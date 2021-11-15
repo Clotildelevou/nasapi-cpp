@@ -347,5 +347,104 @@ namespace nasapi
         this->query = ss.str();
     }
 
+    void Query::EpicNatural()
+    {
+        std::stringstream ss;
 
+        ss << "GET /api/natural/";
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicNaturalDate(const std::string& naturalDate)
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/natural/date/" << naturalDate;
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicNaturalAll()
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/natural/all";
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicNaturalAvailable()
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/natural/available";
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicEnhanced()
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/enhanced";
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicEnhancedDate(const std::string &date)
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/enhanced/" << date;
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicEnhancedAll()
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/enhanced/all";
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicEnhancedAvailable()
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/enhanced/available";
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::EpicArchive(const std::string &collection, const std::string &year, const std::string &month,
+                            const std::string &day, const std::string &imageType, const std::string &filename)
+    {
+        std::stringstream ss;
+
+        ss << "GET /api/archive/"
+        << collection << "/" << year << "/" << month << "/" << day << "/" << imageType << "/" << filename;
+        ss << " HTTP/1.1\r\n"
+           << "Host: epic.gsfc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
 }
