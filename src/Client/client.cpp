@@ -206,6 +206,7 @@ namespace nasapi
         }
     }
 
+
     void Client::Apod(std::string &apiKey) {
         ssl::context context(ssl::context::sslv23);
         context.set_default_verify_paths();
@@ -270,6 +271,7 @@ namespace nasapi
         exit(-1);
     }
 
+
     void Client::NeoFeed(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
         ssl::context context(ssl::context::sslv23);
         context.set_default_verify_paths();
@@ -317,6 +319,7 @@ namespace nasapi
         onAction("Neo Browse written.");
         exit(-1);
     }
+
 
     void Client::DonkiCME(std::string &apiKey, const std::string &startDate, const std::string &endDate) {
         ssl::context context(ssl::context::sslv23);
@@ -484,6 +487,7 @@ namespace nasapi
         exit(-1);
     }
 
+
     void Client::EarthImagery(std::string &apiKey, float lat, float lon, float dim = 0.25, const std::string& date = "today")
     {
         ssl::context context(ssl::context::sslv23);
@@ -518,6 +522,7 @@ namespace nasapi
         exit(-1);
     }
 
+
     void Client::EonetEvents(std::string &apiKey, const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
     {
         ssl::context context(ssl::context::sslv23);
@@ -549,6 +554,179 @@ namespace nasapi
         queryLaunch(socket, resolver, query);
 
         onAction("EonetCategories written.");
+        exit(-1);
+    }
+
+    void Client::EonetLayers(std::string &apiKey, int categorieID, const std::string& source = "", const std::string& status = "", int limit = 0, int days = 0)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EonetLayers(categorieID);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EonetLayers written.");
+        exit(-1);
+    }
+
+
+    void Client::EpicNatural(std::string &apiKey)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicNatural();
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNatural written.");
+        exit(-1);
+    }
+
+    void Client::EpicNaturalDate(std::string &apiKey, const std::string &date)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicNaturalDate(date);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalDate written.");
+        exit(-1);
+    }
+
+    void Client::EpicNaturalAll(std::string &apiKey)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicNaturalAll();
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalAll written.");
+        exit(-1);
+    }
+
+    void Client::EpicNaturalAvailable(std::string &apiKey)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicNaturalAvailable();
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalAvailable written.");
+        exit(-1);
+    }
+
+    void Client::EpicEnhanced(std::string &apiKey)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicEnhanced();
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalAll written.");
+        exit(-1);
+    }
+
+    void Client::EpicEnhancedDate(std::string &apiKey, const std::string &date)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicEnhancedDate(date);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalAll written.");
+        exit(-1);
+    }
+
+    void Client::EpicEnhancedAll(std::string &apiKey)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicEnhancedAll();
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalAll written.");
+        exit(-1);
+    }
+
+    void Client::EpicEnhancedAvailable(std::string &apiKey)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicEnhancedAvailable();
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalAll written.");
+        exit(-1);
+    }
+
+    void Client::EpicArchive(std::string &apiKey, const std::string &collection, const std::string &year,
+                             const std::string &month, const std::string &day,
+                             const std::string &imageType, const std::string &filename)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.EpicArchive(collection, year, month, day, imageType, filename);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("EpicNaturalAll written.");
         exit(-1);
     }
 }

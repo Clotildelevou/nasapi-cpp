@@ -102,6 +102,30 @@ namespace nasapi
         EonetCategories(std::string &apiKey, int categorieID, const std::string &source, const std::string &status,
                         int limit,
                         int days);
+
+        void EonetLayers(std::string &apiKey, int categorieID, const std::string &source, const std::string &status,
+                         int limit,
+                         int days);
+
+        void EpicNatural(std::string &apiKey);
+
+        void EpicNaturalDate(std::string &apiKey, const std::string &date);
+
+        void EpicNaturalAll(std::string &apiKey);
+
+        void EpicNaturalAvailable(std::string &apiKey);
+
+        void EpicEnhanced(std::string &apiKey);
+
+        void EpicEnhancedDate(std::string &apiKey, const std::string &date);
+
+        void EpicEnhancedAll(std::string &apiKey);
+
+        void EpicEnhancedAvailable(std::string &apiKey);
+
+        void EpicArchive(std::string &apiKey, const std::string &collection, const std::string &year,
+                         const std::string &month,
+                         const std::string &day, const std::string &imageType, const std::string &filename);
     };
 }
 
