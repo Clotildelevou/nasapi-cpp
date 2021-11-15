@@ -7,13 +7,22 @@ Small cpp library in order to use NASA's API with TLS protocol.
 
 ## Building on UNIX
 
-
 ### Dependencies
+Check first if you have all the required dependencies.
+
 [Boost C++ Libraries](https://www.boost.org/) : Boost provides free peer-reviewed portable C++ source libraries.
 
 [OpenSSL](https://www.openssl.org/) : Cryptography and SSL/TLS Toolkit
 
 [json-c](https://github.com/json-c/json-c#json-c) : JSON-C implements a reference counting object model that allows you to easily construct JSON objects in C.
 
+### Build with CMake
+
+```
+git clone https://github.com/Clotildelevou/nasapi-cpp.git
+cmake -B build
+cd build
+make
+```
 
 # Documentation
