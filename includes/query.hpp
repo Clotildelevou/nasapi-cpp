@@ -97,6 +97,7 @@ namespace nasapi
                        const std::string &where,
                        const std::string &order, int ra, int dec, const std::string &radius, const std::string &format);
 
+
         void GeneLabData(const std::string &gldsStudyId, int pageNum, int resultsPPage);
 
         void GeneLabMeta(int gldsStudyId);

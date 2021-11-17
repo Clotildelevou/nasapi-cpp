@@ -806,4 +806,21 @@ namespace nasapi
         onAction("GeneLabSearchJSON written.");
         exit(-1);
     }
+
+    void Client::GeneLabSearchHTML(std::string &apiKey, const std::string &term, const std::string &dataSource)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.GeneLabSearchHTML(term, dataSource);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("GeneLabSearchHTML written.");
+        exit(-1);
+    }
 }
