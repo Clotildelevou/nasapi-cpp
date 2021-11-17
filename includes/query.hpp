@@ -98,6 +98,8 @@ namespace nasapi
         void GeneLabSearchJSON(const std::string &term, int from, int size, const std::string &datasource,
                            const std::string &field,
                            const std::string &order, const std::string &ffield, const std::string &fvalue);
+
+        void GeneLabSearchHTML(const std::string &term, const std::string &dataSource);
     };
 }
 

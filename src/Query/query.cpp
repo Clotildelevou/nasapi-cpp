@@ -539,4 +539,17 @@ namespace nasapi
         this->query = ss.str();
     }
 
+    void Query::GeneLabSearchHTML(const std::string &term, const std::string &dataSource)
+    {
+        std::stringstream ss;
+
+        ss << "GET /genelab/data/glds/search?q=" << term
+           << "&data_source=" << dataSource;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: genelab-data.ndc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
 }
