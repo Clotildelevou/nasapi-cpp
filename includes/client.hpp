@@ -29,16 +29,18 @@ namespace nasapi
         Logger logger_;
         std::string header_;
         std::string jsonRep_;
+        std::string htmlRep_;
 
         void onError(const std::string &log);
         void onAction(const std::string &log);
 
         int buildJson();
         int buildHeader();
+        int buildHTML();
 
         int connect(ssl_socket &socket, tcp::resolver &resolver);
         int send(ssl_socket &socket, Query &query);
-        int receive(ssl_socket &socket);
+        int receive(ssl_socket &socket, bool isJSON);
         int disconnect(ssl_socket &socket);
 
         void queryLaunch(ssl_socket &socket, tcp::resolver &resolver, Query &query);

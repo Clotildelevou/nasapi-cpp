@@ -53,6 +53,11 @@ namespace nasapi
         }
     }
 
+    int Client::buildHTML() {
+        //TODO
+        return 0;
+    }
+
     std::string makeString(boost::asio::streambuf &streambuf)
     {
         return {buffers_begin(streambuf.data()),
@@ -145,7 +150,7 @@ namespace nasapi
         return 0;
     }
 
-    int Client::receive(ssl_socket &socket) {
+    int Client::receive(ssl_socket &socke, bool isJSON) {
 
         boost::system::error_code error;
         auto buffer = boost::asio::streambuf();
@@ -175,10 +180,9 @@ namespace nasapi
             this->jsonRep_ = makeString(buffer);
             onAction("Json received.");
         }
+        //TODO : add the HTML possibility
         return (buildJson() == 0 && buildHeader() == 0);
     }
-
-
 
     void Client::queryLaunch(ssl_socket &socket, tcp::resolver &resolver, Query &query) {
         if (connect(socket, resolver) == -1)
@@ -193,7 +197,7 @@ namespace nasapi
             exit(-1);
         }
 
-        if(receive(socket) == -1)
+        if(receive(socket, query.isTypeJSON()) == -1)
         {
             onError("recv");
             exit(-1);
