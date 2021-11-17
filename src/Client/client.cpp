@@ -752,4 +752,58 @@ namespace nasapi
         onAction("EpicArchive written.");
         exit(-1);
     }
+
+
+    void Client::GeneLabData(std::string &apiKey, const std::string& gldsStudyId, int pageNum = 0, int resultsPPage = 0)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.GeneLabData(gldsStudyId, pageNum, resultsPPage);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("GeneLabData written.");
+        exit(-1);
+    }
+
+    void Client::GeneLabMeta(std::string &apiKey, int gldsStudyId)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.GeneLabMeta(gldsStudyId);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("GeneLabMeta written.");
+        exit(-1);
+    }
+
+    void Client::GeneLabSearchJSON(std::string &apiKey, const std::string &term, int from, int size, const std::string &datasource,
+                                   const std::string &field, const std::string &order = "", const std::string &ffield = "",
+                                   const std::string &fvalue = "")
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.GeneLabSearchJSON(term, from, size, datasource, field, order, ffield, fvalue);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("GeneLabSearchJSON written.");
+        exit(-1);
+    }
 }
