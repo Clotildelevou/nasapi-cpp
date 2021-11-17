@@ -6,6 +6,14 @@ namespace nasapi
         return this->query;
     }
 
+    void Query::setHTML() {
+        this->isJSON = false;
+    }
+
+    bool Query::isTypeJSON() {
+        return this->isJSON;
+    }
+
     void Query::Apod(const std::string& date, bool thumb) {
         std::stringstream ss;
         ss << "GET /planetary/apod?api_key=" << this->apiKey;
@@ -526,7 +534,7 @@ namespace nasapi
         std::stringstream ss;
 
         ss << "GET /genelab/data/glds/search?term=" << term
-        << "&from=" << from << "&type=" << datasource;
+        << "&from=" << from << "&size=" << size << "&type=" << datasource << "&field=" << field;
 
         if (!order.empty())
             ss << "&order=" << order;
@@ -535,7 +543,7 @@ namespace nasapi
 
         ss << " HTTP/1.1\r\n"
            << "Host: genelab-data.ndc.nasa.gov"
-           << "\r\n\r\n";;
+           << "\r\n\r\n";
         this->query = ss.str();
     }
 
@@ -548,7 +556,8 @@ namespace nasapi
 
         ss << " HTTP/1.1\r\n"
            << "Host: genelab-data.ndc.nasa.gov"
-           << "\r\n\r\n";;
+           << "\r\n\r\n";
+        setHTML();
         this->query = ss.str();
     }
 

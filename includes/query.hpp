@@ -11,14 +11,20 @@ namespace nasapi
     private:
         std::string apiKey;
         std::string query;
+        bool isJSON;
 
     public:
         Query(std::string &apiKey):
-                apiKey(apiKey)
+                apiKey(apiKey),
+                isJSON(true)
         {}
 
 
         const std::string &getQuery();
+
+        void setHTML();
+
+        bool isTypeJSON();
 
 
         void Apod(const std::string& date = "today", bool thumb = true);
