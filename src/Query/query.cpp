@@ -488,4 +488,68 @@ namespace nasapi
            << "\r\n\r\n";;
         this->query = ss.str();
     }
+
+
+    void Query::GeneLabData(const std::string& gldsStudyId, int pageNum = 0, int resultsPPage = 0)
+    {
+        std::stringstream ss;
+
+        ss << "GET /genelab/data/glds/files/" << gldsStudyId << "/?";
+
+        if (pageNum != 0)
+            ss << "page=" << pageNum;
+        if (resultsPPage != 0)
+            ss << "&size=" << resultsPPage;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: genelab-data.ndc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::GeneLabMeta(int gldsStudyId)
+    {
+        std::stringstream ss;
+
+        ss << "GET /genelab/data/glds/meta/" << gldsStudyId << "/?";
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: genelab-data.ndc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::GeneLabSearchJSON(const std::string &term, int from, int size, const std::string &datasource,
+                              const std::string &field, const std::string &order = "", const std::string &ffield = "",
+                              const std::string &fvalue = "")
+    {
+        std::stringstream ss;
+
+        ss << "GET /genelab/data/glds/search?term=" << term
+        << "&from=" << from << "&type=" << datasource;
+
+        if (!order.empty())
+            ss << "&order=" << order;
+        if (!ffield.empty() && !fvalue.empty())
+            ss << "&ffield=" << ffield << "&fvalue=" << fvalue;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: genelab-data.ndc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
+    void Query::GeneLabSearchHTML(const std::string &term, const std::string &dataSource)
+    {
+        std::stringstream ss;
+
+        ss << "GET /genelab/data/glds/search?q=" << term
+           << "&data_source=" << dataSource;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: genelab-data.ndc.nasa.gov"
+           << "\r\n\r\n";;
+        this->query = ss.str();
+    }
+
 }

@@ -90,6 +90,16 @@ namespace nasapi
         void Exoplanet(const std::string &table, const std::string &select, const std::string &count,
                        const std::string &where,
                        const std::string &order, int ra, int dec, const std::string &radius, const std::string &format);
+
+        void GeneLabData(const std::string &gldsStudyId, int pageNum, int resultsPPage);
+
+        void GeneLabMeta(int gldsStudyId);
+
+        void GeneLabSearchJSON(const std::string &term, int from, int size, const std::string &datasource,
+                           const std::string &field,
+                           const std::string &order, const std::string &ffield, const std::string &fvalue);
+
+        void GeneLabSearchHTML(const std::string &term, const std::string &dataSource);
     };
 }
 
