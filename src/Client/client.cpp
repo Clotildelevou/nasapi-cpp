@@ -841,4 +841,40 @@ namespace nasapi
         onAction("Feedtype written.");
         exit(-1);
     }
+
+
+    void Client::MRPsol(std::string &apiKey, int sol, const std::string &camera = "all", int page = 1)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.MRPsol(sol, camera, page);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("MRPsol written.");
+        exit(-1);
+    }
+
+    void Client::MRPEarthDate(std::string &apiKey, const std::string &sol, const std::string &camera = "all", int page = 1)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.MRPEarthDate(sol, camera, page);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("MRPEarthDate written.");
+        exit(-1);
+    }
+
 }

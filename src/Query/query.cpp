@@ -581,4 +581,48 @@ namespace nasapi
         this->query = ss.str();
     }
 
+    void Query::MRPsol(int sol, const std::string &camera, int page) {
+        std::stringstream ss;
+
+        ss << "GET /mars-photos/api/v1/rovers/curiosity/photos?";
+
+        if (sol != -1)
+            ss << "&sol=" << sol;
+
+        if (camera != "all")
+            ss << "&camera" << camera;
+
+        if (page != 1)
+            ss << "&page" << page;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: api.nasa.gov"
+           << "\r\n\r\n";
+        setHTML();
+        this->query = ss.str();
+    }
+
+    void Query::MRPEarthDate(const std::string &sol, const std::string &camera, int page) {
+        std::stringstream ss;
+
+        ss << "GET /mars-photos/api/v1/rovers/curiosity/photos?";
+
+        if (!sol.empty())
+            ss << "&sol=" << sol;
+
+        if (camera != "all")
+            ss << "&camera" << camera;
+
+        if (page != 1)
+            ss << "&page" << page;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: api.nasa.gov"
+           << "\r\n\r\n";
+        setHTML();
+        this->query = ss.str();
+    }
+
+
+
 }

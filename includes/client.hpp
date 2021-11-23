@@ -142,6 +142,11 @@ namespace nasapi
         void GeneLabSearchHTML(std::string &apiKey, const std::string &term, const std::string &dataSource);
 
         void Insight(std::string &apiKey, const std::string &version, const std::string &feedtype);
+
+        void MRPsol(std::string &apiKey, int sol, const std::string &camera, int page);
+
+
+        void MRPEarthDate(std::string &apiKey, const std::string &sol, const std::string &camera, int page);
     };
 }
 
