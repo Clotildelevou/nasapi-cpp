@@ -150,7 +150,7 @@ namespace nasapi
         return 0;
     }
 
-    int Client::receive(ssl_socket &socke, bool isJSON) {
+    int Client::receive(ssl_socket &socket, bool isJSON) {
 
         boost::system::error_code error;
         auto buffer = boost::asio::streambuf();
