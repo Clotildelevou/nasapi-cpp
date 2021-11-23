@@ -823,4 +823,22 @@ namespace nasapi
         onAction("GeneLabSearchHTML written.");
         exit(-1);
     }
+
+
+    void Client::Insight(std::string &apiKey, const std::string &version, const std::string &feedtype)
+    {
+        ssl::context context(ssl::context::sslv23);
+        context.set_default_verify_paths();
+        boost::asio::io_service io_service;
+        ssl_socket socket(io_service, context);
+        tcp::resolver resolver(io_service);
+
+        Query query(apiKey);
+        query.Insight(version, feedtype);
+
+        queryLaunch(socket, resolver, query);
+
+        onAction("Feedtype written.");
+        exit(-1);
+    }
 }

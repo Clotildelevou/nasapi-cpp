@@ -140,6 +140,8 @@ namespace nasapi
                                const std::string &fvalue);
 
         void GeneLabSearchHTML(std::string &apiKey, const std::string &term, const std::string &dataSource);
+
+        void Insight(std::string &apiKey, const std::string &version, const std::string &feedtype);
     };
 }
 

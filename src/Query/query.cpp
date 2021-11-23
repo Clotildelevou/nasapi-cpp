@@ -561,4 +561,24 @@ namespace nasapi
         this->query = ss.str();
     }
 
+
+    void Query::Insight(const std::string &version = "", const std::string &feedtype = "")
+    {
+        std::stringstream ss;
+
+        ss << "GET /insight_weather/?";
+
+        if (!version.empty())
+          ss << "&version=" << version;
+
+        if (!version.empty())
+            ss << "&feedtype=" << feedtype;
+
+        ss << " HTTP/1.1\r\n"
+           << "Host: api.nasa.gov"
+           << "\r\n\r\n";
+        setHTML();
+        this->query = ss.str();
+    }
+
 }
