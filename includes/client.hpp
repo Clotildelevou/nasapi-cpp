@@ -13,7 +13,7 @@
 #include <string>
 
 
-#include "json.h"
+#include <json-c/json.h>
 
 #include "logger.hpp"
 #include "query.hpp"
