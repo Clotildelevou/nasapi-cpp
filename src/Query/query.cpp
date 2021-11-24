@@ -367,10 +367,11 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/natural/";
-        ss << " HTTP/1.1\r\n"
-           << "Host: epic.gsfc.nasa.gov"
-           << "\r\n\r\n";;
+        ss << "GET /api/natural/"
+            << "&api_key=" << this->apiKey
+            << " HTTP/1.1\r\n"
+            << "Host: epic.gsfc.nasa.gov"
+            << "\r\n\r\n";;
         this->query = ss.str();
     }
 
@@ -378,7 +379,7 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/natural/date/" << naturalDate;
+        ss << "GET /api/natural/date/" << naturalDate << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -389,7 +390,7 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/natural/all";
+        ss << "GET /api/natural/all" << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -400,7 +401,7 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/natural/available";
+        ss << "GET /api/natural/available" << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -411,7 +412,7 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/enhanced";
+        ss << "GET /api/enhanced" << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -422,7 +423,7 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/enhanced/" << date;
+        ss << "GET /api/enhanced/" << date << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -433,7 +434,7 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/enhanced/all";
+        ss << "GET /api/enhanced/all" << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -444,7 +445,7 @@ namespace nasapi
     {
         std::stringstream ss;
 
-        ss << "GET /api/enhanced/available";
+        ss << "GET /api/enhanced/available" << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -457,7 +458,8 @@ namespace nasapi
         std::stringstream ss;
 
         ss << "GET /api/archive/"
-        << collection << "/" << year << "/" << month << "/" << day << "/" << imageType << "/" << filename;
+            << collection << "/" << year << "/" << month << "/" << day << "/" << imageType << "/" << filename
+            << "&api_key=" << this->apiKey;
         ss << " HTTP/1.1\r\n"
            << "Host: epic.gsfc.nasa.gov"
            << "\r\n\r\n";;
@@ -584,7 +586,7 @@ namespace nasapi
     void Query::MRPsol(int sol, const std::string &camera, int page) {
         std::stringstream ss;
 
-        ss << "GET /mars-photos/api/v1/rovers/curiosity/photos?";
+        ss << "GET /mars-photos/api/v1/rovers/curiosity/photos?&api_key=" << this->apiKey;
 
         if (sol != -1)
             ss << "&sol=" << sol;
@@ -605,7 +607,7 @@ namespace nasapi
     void Query::MRPEarthDate(const std::string &sol, const std::string &camera, int page) {
         std::stringstream ss;
 
-        ss << "GET /mars-photos/api/v1/rovers/curiosity/photos?";
+        ss << "GET /mars-photos/api/v1/rovers/curiosity/photos?&api_key=" << this->apiKey;
 
         if (!sol.empty())
             ss << "&sol=" << sol;
@@ -622,6 +624,8 @@ namespace nasapi
         setHTML();
         this->query = ss.str();
     }
+
+
 
 
 
